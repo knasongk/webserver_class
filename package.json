@@ -4,8 +4,8 @@
   "description": "uci web server class",
   "main": "index.js",
   "scripts": {
-    "start": "node -r esm week1/src/index.js",
-    "test": "mocha -r esm week1/test/tests.js"
+    "start": "node -r esm week2/src/index.js",
+    "test": "mocha -r esm week2/test/tests.js"
   },
   "repository": {
     "type": "git",
