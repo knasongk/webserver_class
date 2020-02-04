@@ -1,0 +1,1 @@
+import './myfunc.spec.js';

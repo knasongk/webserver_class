@@ -14,6 +14,8 @@ const tourPackage = (req, res) => {
 //	console.log("id = ", id);
 
 	const tour = getTourById(parseFloat(id));
+
+	console.log("tour = ", tour);
 	res.json(tour);
 };
 
