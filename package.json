@@ -1,0 +1,29 @@
+{
+  "name": "webserver_class",
+  "version": "1.0.0",
+  "description": "uci web server class",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r esm week1/src/index.js",
+    "test": "mocha -r esm week1/test/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knasongk/webserver_class.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knasongk/webserver_class/issues"
+  },
+  "homepage": "https://github.com/knasongk/webserver_class#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "lint": "^0.7.0",
+    "mocha": "^7.0.1"
+  }
+}
