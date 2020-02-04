@@ -11,7 +11,7 @@ var port = process.env.PORT || 8080;
 
 const tourPackage = (req, res) => {
 	const { id } = req.params || {};
-	console.log("id = ", id);
+//	console.log("id = ", id);
 
 	const tour = getTourById(parseFloat(id));
 	res.json(tour);
