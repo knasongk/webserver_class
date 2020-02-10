@@ -1,3 +1,5 @@
+SELECT city from destinations where country = 'Australia';
+
 SELECT city, mood FROM destinations d JOIN city_preferences cp ON d.id = cp.city_id JOIN preferences p ON preference_id = p.id;
 
 SELECT activity, category, min_cost, max_cost FROM themes t JOIN budgets b ON t.budget_id = b.id;

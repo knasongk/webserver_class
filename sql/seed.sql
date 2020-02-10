@@ -12,7 +12,15 @@ INSERT INTO destinations (city, country, language) VALUES
    ('Paris', 'France', 'French'),
    ('Berlin', 'Germany', 'German'),
    ('Hamburg', 'Germany', 'German'),
-   ('Munich', 'Germany', 'German');
+   ('Budapest', 'Hungary', 'Hungarian'),
+   ('Dublin', 'Ireland', 'English'),
+   ('Rome', 'Italy', 'Italian'),
+   ('Venice', 'Italy', 'Italian'),
+   ('Tokyo', 'Japan', 'Japanese'),
+   ('Cape Town', 'South Africa', 'English'),
+   ('New York', 'USA', 'English'),
+   ('London', 'United Kingdom', 'English'),
+   ('Turkey', 'Istanbul', 'Turkish');
 
 INSERT INTO preferences (mood) VALUES
    ('slow pace'),
@@ -62,4 +70,5 @@ INSERT INTO themes (activity, description, budget_id, preference_id) VALUES
    ('soccer match', 'go to local club team match', 2, 4);
 
 INSERT INTO city_preferences (preference_id, city_id) VALUES
-   (2,1), (3,2), (3,3), (3,4), (4,5), (6,7), (8,8);
+   (2,1), (3,2), (3,3), (3,4), (4,5), (6,7), (8,8),
+   (14,12), (11,10), (9,8), (12,15), (13,3), (14,13);
