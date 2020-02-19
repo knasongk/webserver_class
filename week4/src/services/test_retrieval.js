@@ -1,4 +1,4 @@
-import knex from './database'
+import knex from '../database'
 const getCityByCountry = async country => {
 	const results = await knex('destinations')
 	.where({country})
@@ -6,7 +6,7 @@ const getCityByCountry = async country => {
 	return results;
 };
 
-const getGermanyId = async() => {
+export const getGermanyId = async() => {
 	const country='Germany';
 	const id=await getCityByCountry(country);
 	let kstr = JSON.stringify(id);

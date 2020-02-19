@@ -1,9 +1,10 @@
-import knex from './database'
+import knex from '../database'
 
-const delCity = async city =>
+export const delCity = async city => {
 	await knex('destinations')
           .where({city: 'Bangkok'})
 	  .del();
+}
 
 delCity('Bangkok');
 
