@@ -1,15 +1,30 @@
 import knex from './database'
 
-const addCity = async city =>
-	await knex('destinations')
-          .insert(city, 'id');
-        console.log("done addCity");
+const addCity = async city => { 
+	 const [dest_id] = await knex('destinations')
+          .insert(city,'id');
+	return { id: dest_id };
+};
 
-const ids = addCity([{ city: 'Bangkok',  
+
+console.log("kn1");
+
+
+export const kenAdd = async () => {
+	const k_id = await addCity([{ city: 'Bangkok',  
 	   country: 'Thailand',
 	   language: 'Thai' }]);
+	console.log('kenAdd = ', k_id);
+};
 
-console.log("ids = ", ids);
+kenAdd();
+
+
+/*
+setTimeout(function() {
+	console.log('ids = ', ids);
+}, 3000);
+*/
 
 
 console.log("done inserting");

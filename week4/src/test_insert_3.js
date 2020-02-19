@@ -11,23 +11,27 @@ console.log("kn1");
 
 
 export const kenAdd = async () => {
-	await addCity([{ city: 'Bangkok',  
+	await addCity([{ 
+	   id: 18,
+           city: 'Bangkok',  
 	   country: 'Thailand',
 	   language: 'Thai' }]);
 };
 
-const ids  = kenAdd();
+var ids  = kenAdd();
 
 console.log('ids = ', ids);
 
 console.log("kn2");
 
-/*
+
 setTimeout(function() {
-	console.log('ids = ', ids);
+	console.log('wait 3 secs');
 }, 3000);
-*/
 
 console.log("kn3");
+console.log('ids = ', ids);
+
+
 
 console.log("done inserting");
