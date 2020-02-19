@@ -1,0 +1,177 @@
+/* CSS  */
+
+*{
+  margin:0px;
+  padding:0px;
+}
+
+h1, h2, h3, h4{
+margin-top:1em;
+margin-bottom:.2em;
+ font-family: serif;
+}
+
+h1 {
+  color:#af3600;
+  font-size: 2.5em;
+  margin-top:.0em;
+    margin-bottom:.1em;
+}
+h2 {
+	color:#496f9d;
+	font-size: 2em;
+
+}
+h3 {
+  color:#496f9d;
+  font-size: 1.5em;
+
+}
+
+p {color:gray;
+ margin-bottom:.5em;
+ margin-top:.5em;
+ font-family: 'Raleway', sans-serif;
+}
+
+@keyframes colorful_line {
+ 0% {background-color:red;}
+ 25% {background-color:yellow}
+ 50% {background-color: blue;}
+ 100% {background-color: green}
+}
+
+@keyframes swing{
+   0% {transform:  rotate(0turn);}
+   20% {transform: translate(25%,0);}
+   50% {transform: rotate(0.25turn);}
+   60% {transform: translate(150%,0);}
+   75% {transform: rotate(0.95turn);}
+   80% {transform: translate(275%,0)}
+   100% {transform: translate(0turn)}
+}
+
+.container {
+margin-top:20px;
+max-width:1200px;
+margin-left: auto;
+margin-right:auto;
+padding: 10px 0px;
+}
+
+.banner{
+width:100%;
+}
+.colorBackgound{
+  background-color:#e6eef8;
+}
+
+.header {
+	background-color:red;
+    margin:0px;
+    padding:200px;
+}
+
+.header2{font-size: 1em;}
+
+/*---------- grids-----*/
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 20px;
+  padding: 0px;
+  margin:30px 0px;
+}
+
+.grid-container .center > div {
+
+  text-align: center;
+}
+
+/*------------ animation ------------*/
+
+.animation-container {
+  margin-top:400px;
+  background-color:red;
+  animation-name:colorful_line;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+}
+
+.animation-swing{
+  margin-top: 50px;
+  animation-duration: 5s;
+  animation-iteration-count:infinite;
+  animation-name:swing;
+  position:absolute;
+}
+
+body{background-color: cyan}
+.responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+/*------------ flex boxes -----------*/
+.box1 {border: 1px solid orange; display: flex; flex-direction: row; justify-content: space-between; font-weight:bold}
+.item_flex1 {background-color: lightGreen; border: 1px solid black; padding: 5px}
+
+#responsive_1 {
+  font-size: 1em
+}
+
+/*------------------ media queries --------------------*/
+
+@media screen and (max-width: 1800px) {
+  body {background-color:lightpink}
+  .responsive {
+    max-width: 70%;
+    height: auto;
+  }
+  .box1 {border: 1px solid orange; display: flex; flex-direction: column; justify-content: space-between; font-weight:bold}
+  .item_flex1 {background-color: lightcyan; font-size: 2em; align-self:left; width: 75%; border: 1px solid black; padding: 5px}
+   .header2{font-size: 2em;}
+   #responsive_1 {
+     font-size: 1.5em
+   }
+  @keyframes swing{
+   0% {transform:  rotate(0turn);}
+   20% {transform: translate(25%,0);}
+   50% {transform: rotate(0.55turn);}
+   60% {transform: translate(100%,0);}
+   75% {transform: rotate(0.80turn);}
+   80% {transform: translate(175%,0)}
+   100% {transform: translate(0turn)}
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  body {background-color: yellow}
+  .responsive {
+    max-width: 50%;
+    height: auto;
+  }
+  .box1 {border: 1px solid orange; display: flex; flex-direction: column; justify-content: space-between; font-weight:bold}
+  .item_flex1 {background-color: lightpink; font-size: 2.5em; align-self:left; width:90%; border: 1px solid black; padding: 5px}
+   #responsive_1 {
+     font-size: 2.5em
+   }
+   .header2{font-size: 2.5em;}
+  .animation-container {
+    margin-top:300px;
+    background-color:red;
+    animation-name:colorful_line;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+  }
+  @keyframes swing{
+   0% {transform:  rotate(0turn);}
+   20% {transform: translate(25%,0);}
+   50% {transform: rotate(0.15turn);}
+   60% {transform: translate(100%,0);}
+   75% {transform: rotate(0.70turn);}
+   80% {transform: translate(200%,0)}
+   100% {transform: translate(0turn)}
+  }
+}
