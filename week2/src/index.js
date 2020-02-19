@@ -4,7 +4,8 @@ import { getTourById } from './tours.js';
 
 const app = express();
 
-const staticRoute = express.static(__dirname + '/public');
+//const staticRoute = express.static(__dirname + '/public');
+const staticRoute = express.static('../public');
 app.use('/', staticRoute);
 
 var port = process.env.PORT || 8080;

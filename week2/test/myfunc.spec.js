@@ -15,16 +15,23 @@ describe('MyModule', () => {
    });
 
    describe('myFunc (getTourById) happy path for input value 2', () => {
-       it('check cost for tour#1 when given 2', () => {
+       it('check cost for tour#2 when given 2', () => {
 	       const tour = getTourById(2);
 	       expect(tour.cost).to.equal("$250") });
-       it('check description info for tour#1 when given 2', () => {
+       it('check description info for tour#2 when given 2', () => {
 	       const tour = getTourById(2);
 	       expect(tour.description).to.equal("temple excursion in Songkhla province") });
        it('check id for tour#1 when given 2', () => {
 	       const tour = getTourById(2);
 	       expect(tour.id).to.equal(2) });
    });
+
+   describe('myFunc (getTourById) happy path for input value 2', () => {
+       it('check object for tour#2 when given 2', () => {
+	       const tour = getTourById(2);
+	       expect(tour).to.eql({id:2, description:"temple excursion in Songkhla province", cost:"$250"})});
+   });
+
 
    describe('myFunc (getTourById) unhappy path for input value 3', () => {
        it('check for undefined tour when given 3', () => {
