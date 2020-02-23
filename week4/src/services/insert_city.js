@@ -19,16 +19,7 @@ const addCity = async city => {
 	try {
 
 	console.log("newItem = ", newItem);
-	
 	const addedCity = await addCity(newItem); 
-
-/*
-	const addedCity = await addCity([{ 
-	   id: 31,
-           city: 'Bangkok',  
-	   country: 'Thailand',
-	   language: 'Thai' }]);
-*/
 
 	console.log('addNewCity = ', addedCity);
 	console.log('dest_city = ', addedCity.dest_city);

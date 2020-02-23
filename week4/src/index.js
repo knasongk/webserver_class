@@ -26,7 +26,8 @@ const addCityRoute = async (req, res) => {
 //	console.log("req.body = ", req.body);
 	//
 	// not sure why the body parser does not work
-	//
+	// <need help> to figure out how to correctly read the 
+	// req.body that was pass in from the addCity() from public/main.js
 	// hard code the city insert for now
 	//
 	
