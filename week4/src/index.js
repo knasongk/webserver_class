@@ -23,24 +23,24 @@ const tourPackage = (req, res) => {
 
 
 const addCityRoute = async (req, res) => {
-	const city = res.body;
-
-        console.log("in the addCityRoute now");
+//	console.log("req.body = ", req.body);
+	//
+	// not sure why the body parser does not work
+	//
+	// hard code the city insert for now
+	//
+	
+	const city = [{id: 20, city:'Bangkok', country:'Thailand', language:'Thai'}];
 
 	const ret_city = await addNewCity(city);
 	console.log("ret_city = ", ret_city);
 
-	console.log("ksn1: addedCity = ", ret_city.addedCity);
+	console.log("addedCity = ", ret_city.addedCity);
 
 	var myJSON = JSON.stringify(ret_city);
 	console.log("myJSON = ", myJSON);
 
-
-        //res.json(ret_city);
-	
 	res.json({myJSON});
-	
-//	res.json({success:true});
 };
 
 app.get('/api/tour/:id', tourPackage); 

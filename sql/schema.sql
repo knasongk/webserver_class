@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
 	last_login timestamp);
 
 CREATE TABLE IF NOT EXISTS destinations (
-	id integer PRIMARY KEY, 
+	id serial, 
 	city varchar(50), 
 	country varchar(50), 
 	language varchar(50));

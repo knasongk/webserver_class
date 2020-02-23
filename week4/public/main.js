@@ -10,6 +10,32 @@ window.onload = function() {
     document.getElementById('addForm').addEventListener('submit', addCity);
 }
 
+const parseField = (formId, fieldName) => {
+	console.log("formId  = ", formId);
+	console.log("fieldName = ", fieldName);
+
+      const inputSelector = `#${formId} [name="${fieldName}"]`;
+
+      console.log("inputSelector = ", inputSelector);
+
+      const input = document.querySelector(inputSelector);
+      return input.value || input.placeholder;
+};
+
+
+//List of all the input destination fields.
+const fields = ['id', 'city', 'country', 'language'];
+
+const parseForm = formId => {
+	const city = fields.reduce((city,field) => {
+	city[field] = parseField(formId, field);
+	return city;
+}, {});
+
+   return city;
+};
+
+
 const makeRequest = async (url, params) => {
 	try {
 	  const response = await fetch(url, params);
@@ -18,8 +44,7 @@ const makeRequest = async (url, params) => {
 
 	   const responseJson = await response.json();
 
-		console.log("responseJson.myJSON = ", responseJson.myJSON);
-
+         	console.log("responseJson.myJSON = ", responseJson.myJSON);
 		responseObj = JSON.parse(responseJson.myJSON);
 		console.log("responseObj.addedCity.dest_city = ", 
 			responseObj.addedCity.dest_city);
@@ -39,13 +64,19 @@ const makeRequest = async (url, params) => {
 const addCity = async e => {
 	e.preventDefault();
 
+	const city = parseForm('addForm');
+	console.log("city.id = ", city.id);
+	console.log("city.city = ", city.city);
+	console.log("city.country = ", city.country);
+	console.log("city.language = ", city.language);
 
-//	const city = parseForm('addCity');
+	var kenJason = JSON.stringify(city);
+	console.log("kenJason = ", kenJason);
 	
 	const wasSuccess = await makeRequest('/api/addCity', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify({a:1})
+		body: JSON.stringify(city)
 	});
 
 	if(!wasSuccess) alert ('addCity failed');
