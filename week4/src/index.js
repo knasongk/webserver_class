@@ -2,8 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import { getTourById } from './tours.js';
 import { addNewCity } from './services/insert_city.js';
-//import { retrieveCity } from './services/retrieve_city.js';
-//import { updateTheme } from './services/update_theme.js';
+import { retrieveCity } from './services/retrieve_city.js';
+import { updateTheme } from './services/update_theme.js';
 import { deleteCity } from './services/delete_city.js';
 
 const app = express();
@@ -38,8 +38,6 @@ const addCityRoute = async (req, res) => {
 	const ret_city = await addNewCity(city);
 	console.log("ret_city = ", ret_city);
 
-	console.log("addedCity = ", ret_city.addedCity);
-
 	var myJSON = JSON.stringify(ret_city);
 	console.log("myJSON = ", myJSON);
 
@@ -51,13 +49,13 @@ const retrieveCityRoute = async (req, res) => {
 	//
 	// not sure why the body parser does not work
 	// <need help> to figure out how to correctly read the 
-	// req.body that was pass in from the addCity() from public/main.js
-	// hard code the city insert for now
+	// req.body that was pass in from the retrieveCity() from public/main.js
+	// hard code the country insert for now
 	//
 	
-	const city = [{id: 20, city:'Bangkok', country:'Thailand', language:'Thai'}];
+	const country = {country:'Italy'};
 
-	const ret_city = await addNewCity(city);
+	const ret_city = await retrieveCity(country);
 	console.log("ret_city = ", ret_city);
 
 	console.log("addedCity = ", ret_city.addedCity);
@@ -73,21 +71,17 @@ const updateThemeRoute = async (req, res) => {
 	//
 	// not sure why the body parser does not work
 	// <need help> to figure out how to correctly read the 
-	// req.body that was pass in from the addCity() from public/main.js
-	// hard code the city insert for now
+	// req.body that was pass in from the updateTheme() from public/main.js
+	// hard code the theme id and description update for now
 	//
-	
-	const city = [{id: 20, city:'Bangkok', country:'Thailand', language:'Thai'}];
+	console.log("in updateThemeRoute");
+	const theme = {id: 3, description: 'listen to live music'};
 
-	const ret_city = await addNewCity(city);
-	console.log("ret_city = ", ret_city);
+	 console.log("updatethemeRoute: theme.id = ", theme.id);
+	 console.log("updatethemeRoute: theme.desc = ", theme.description);
+	await updateTheme(theme);
 
-	console.log("addedCity = ", ret_city.addedCity);
-
-	var myJSON = JSON.stringify(ret_city);
-	console.log("myJSON = ", myJSON);
-
-	res.json({myJSON});
+	res.json({success: true});
 };
 
 const deleteCityRoute = async (req, res) => {

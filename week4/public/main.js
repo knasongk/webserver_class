@@ -38,15 +38,15 @@ const parseAddForm = formId => {
    return dest;
 };
 
-const retrieveFields = ['mood'];
+const retrieveFields = ['country'];
 
 const parseRetrieveForm = formId => {
-	const pref = retrieveFields.reduce((pref,field) => {
-	pref[field] = parseField(formId, field);
-	return pref;
+	const dest = retrieveFields.reduce((dest,field) => {
+	dest[field] = parseField(formId, field);
+	return dest;
 }, {});
 
-   return pref;
+   return dest;
 };
 
 const updateFields = ['id', 'description'];
@@ -104,11 +104,16 @@ const makeRequest_2 = async (url, params) => {
 
        	console.log("responseJson.myJSON = ", responseJson.myJSON);
 
+	alert(responseJson.myJSON); 
+
+		/*
 	responseObj = JSON.parse(responseJson.myJSON);
 	console.log("responseObj.addedCity.dest_city = ", 
 		responseObj.addedCity.dest_city);
 
 	alert("Insert " + responseObj.addedCity.dest_city + " successfully");
+	*/
+
 
 	return true;
 	}  
@@ -150,8 +155,8 @@ const addCity = async e => {
 const retrieveCity = async e => {
 	e.preventDefault();
 
-	const pref = parseRetrieveForm('retrieveForm');
-	console.log("pref.mood = ", pref.mood);
+	const dest = parseRetrieveForm('retrieveForm');
+	console.log("dest.country = ", dest.country);
 
 	/* confirm that the body gets the correct info from the gui */
 	/* note: the retrieveCityRoute() in the src/index.js somehow 
@@ -159,13 +164,13 @@ const retrieveCity = async e => {
 	 * <need help>
 	 */
 
-	var body_Jason = JSON.stringify(pref);
+	var body_Jason = JSON.stringify(dest);
 	console.log("body_Jason = ", body_Jason);
 	
-	const wasSuccess = await makeRequest('/api/retrieveCity', {
+	const wasSuccess = await makeRequest_2('/api/retrieveCity', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify(pref)
+		body: JSON.stringify(dest)
 	});
 
 	if(!wasSuccess) alert ('retrieveCity failed');
