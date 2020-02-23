@@ -2,10 +2,12 @@ import express from 'express'
 import cors from 'cors'
 import { getTourById } from './tours.js';
 import { addNewCity } from './services/insert_city.js';
+//import { retrieveCity } from './services/retrieve_city.js';
+//import { updateTheme } from './services/update_theme.js';
+import { deleteCity } from './services/delete_city.js';
 
 const app = express();
 
-//const staticRoute = express.static(__dirname + '/public');
 const staticRoute = express.static('../public');
 app.use('/', staticRoute);
 
@@ -44,9 +46,73 @@ const addCityRoute = async (req, res) => {
 	res.json({myJSON});
 };
 
-app.get('/api/tour/:id', tourPackage); 
+const retrieveCityRoute = async (req, res) => {
+//	console.log("req.body = ", req.body);
+	//
+	// not sure why the body parser does not work
+	// <need help> to figure out how to correctly read the 
+	// req.body that was pass in from the addCity() from public/main.js
+	// hard code the city insert for now
+	//
+	
+	const city = [{id: 20, city:'Bangkok', country:'Thailand', language:'Thai'}];
 
+	const ret_city = await addNewCity(city);
+	console.log("ret_city = ", ret_city);
+
+	console.log("addedCity = ", ret_city.addedCity);
+
+	var myJSON = JSON.stringify(ret_city);
+	console.log("myJSON = ", myJSON);
+
+	res.json({myJSON});
+};
+
+const updateThemeRoute = async (req, res) => {
+//	console.log("req.body = ", req.body);
+	//
+	// not sure why the body parser does not work
+	// <need help> to figure out how to correctly read the 
+	// req.body that was pass in from the addCity() from public/main.js
+	// hard code the city insert for now
+	//
+	
+	const city = [{id: 20, city:'Bangkok', country:'Thailand', language:'Thai'}];
+
+	const ret_city = await addNewCity(city);
+	console.log("ret_city = ", ret_city);
+
+	console.log("addedCity = ", ret_city.addedCity);
+
+	var myJSON = JSON.stringify(ret_city);
+	console.log("myJSON = ", myJSON);
+
+	res.json({myJSON});
+};
+
+const deleteCityRoute = async (req, res) => {
+//	console.log("req.body = ", req.body);
+	//
+	// not sure why the body parser does not work
+	// <need help> to figure out how to correctly read the 
+	// req.body that was pass in from the deleteCity() from public/main.js
+	// hard code the city insert for now
+	//
+	
+	console.log("in deleteCityRoute");
+	const cityId = {id: 7};
+	console.log("cityId.id = ", cityId.id);
+
+	await deleteCity(cityId.id);
+
+	res.json({success: true});
+};
+
+app.get('/api/tour/:id', tourPackage); 
 app.post('/api/addCity', addCityRoute);
+app.post('/api/retrieveCity', retrieveCityRoute);
+app.post('/api/updateTheme', updateThemeRoute);
+app.post('/api/deleteCity', deleteCityRoute);
 
 
 app.listen(port, function() {

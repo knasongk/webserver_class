@@ -9,7 +9,7 @@ window.onload = function() {
 
     document.getElementById('addForm').addEventListener('submit', addCity);
     document.getElementById('retrieveForm').addEventListener('submit', retrieveCity);
-    document.getElementById('updateForm').addEventListener('submit', updatePref);
+    document.getElementById('updateForm').addEventListener('submit', updateTheme);
     document.getElementById('deleteForm').addEventListener('submit', deleteCity);
 }
 
@@ -74,21 +74,43 @@ const parseDeleteForm = formId => {
 ////////////////////////////////////////////////////////////////////
 
 const makeRequest = async (url, params) => {
-	try {
+        try {
 	  const response = await fetch(url, params);
 
-	  if(!response.ok) throw new Error(response.statusText);
+        if(!response.ok) throw new Error(response.statusText);
 
 	   const responseJson = await response.json();
 
-         	console.log("responseJson.myJSON = ", responseJson.myJSON);
-		responseObj = JSON.parse(responseJson.myJSON);
-		console.log("responseObj.addedCity.dest_city = ", 
-			responseObj.addedCity.dest_city);
 
-		alert("Insert " + responseObj.addedCity.dest_city + " successfully");
-
+   	if(!responseJson.success) throw new Error(responseJson.message);
 	   return true;
+	}  
+	catch(err) {
+		console.error(err);
+		alert('an error has occurred');
+	};
+
+	return false;
+};
+
+const makeRequest_2 = async (url, params) => {
+	try {
+	  const response = await fetch(url, params);
+
+	if(!response.ok) throw new Error(response.statusText);
+
+	const responseJson = await response.json();
+
+
+       	console.log("responseJson.myJSON = ", responseJson.myJSON);
+
+	responseObj = JSON.parse(responseJson.myJSON);
+	console.log("responseObj.addedCity.dest_city = ", 
+		responseObj.addedCity.dest_city);
+
+	alert("Insert " + responseObj.addedCity.dest_city + " successfully");
+
+	return true;
 	}  
 	catch(err) {
 		console.error(err);
@@ -116,7 +138,7 @@ const addCity = async e => {
 	var body_Jason = JSON.stringify(dest);
 	console.log("body_Jason = ", body_Jason);
 	
-	const wasSuccess = await makeRequest('/api/addCity', {
+	const wasSuccess = await makeRequest_2('/api/addCity', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify(dest)
@@ -140,7 +162,7 @@ const retrieveCity = async e => {
 	var body_Jason = JSON.stringify(pref);
 	console.log("body_Jason = ", body_Jason);
 	
-	const wasSuccess = await makeRequest('/api/addCity', {
+	const wasSuccess = await makeRequest('/api/retrieveCity', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify(pref)
@@ -149,7 +171,7 @@ const retrieveCity = async e => {
 	if(!wasSuccess) alert ('retrieveCity failed');
 };
 
-const updatePref = async e => {
+const updateTheme = async e => {
 	e.preventDefault();
 
 	const theme = parseUpdateForm('updateForm');
@@ -165,7 +187,7 @@ const updatePref = async e => {
 	var body_Jason = JSON.stringify(theme);
 	console.log("body_Jason = ", body_Jason);
 	
-	const wasSuccess = await makeRequest('/api/addCity', {
+	const wasSuccess = await makeRequest('/api/updateTheme', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify(theme)
@@ -189,7 +211,7 @@ const deleteCity = async e => {
 	var body_Jason = JSON.stringify(dest);
 	console.log("body_Jason = ", body_Jason);
 	
-	const wasSuccess = await makeRequest('/api/addCity', {
+	const wasSuccess = await makeRequest('/api/deleteCity', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify(dest)

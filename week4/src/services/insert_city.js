@@ -13,9 +13,7 @@ const addCity = async city => {
 	}
 };
 
-//export const addNewCity = async () => {
-
-  export const addNewCity = async newItem => {
+export const addNewCity = async newItem => {
 	try {
 
 	console.log("newItem = ", newItem);
