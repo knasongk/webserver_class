@@ -195,9 +195,9 @@ const updateTheme = async e => {
 	});
 
 	if(SuccessStat == true)
-		alert('updateTheme success');
+		alert('Succeed to updateTheme with description ' + theme.description);
 	else
-		alert('updateTheme fail');
+		alert('Fail to updateTheme with description ' + theme.description);
 };
 
 const deleteCity = async e => {
@@ -216,9 +216,9 @@ const deleteCity = async e => {
 	});
 
 	if(SuccessStat == true)
-		alert('updateTheme success');
+		alert('Succeed to delete city id' + dest.id);
 	else
-		alert('updateTheme fail');
+		alert('Fail to delete city id ' + dest.id);
 };
 	
 
