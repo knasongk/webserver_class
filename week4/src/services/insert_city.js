@@ -1,6 +1,6 @@
 import knex from '../database'
 
-const addCity = async city => { 
+export const addCity = async city => { 
     try {	 
 	const [dest_city] = await knex('destinations')
           .insert(city)
@@ -10,6 +10,7 @@ const addCity = async city => {
 	return { dest_city };
 	} catch(e) {
 		console.error(e);
+		return({dest_city: ''});
 	}
 };
 

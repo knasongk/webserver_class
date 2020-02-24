@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import { getTourById } from './tours.js';
-import { addNewCity } from './services/insert_city.js';
-import { retrieveCity } from './services/retrieve_city.js';
+import { addCity } from './services/insert_city.js';
+import { getCityByCountry } from './services/retrieve_city.js';
 import { updateTheme } from './services/update_theme.js';
 import { deleteCity } from './services/delete_city.js';
 
@@ -28,34 +28,24 @@ const tourPackage = (req, res) => {
 
 
 const addCityRoute = async (req, res) => {
-	console.log("req.body = ", req.body);
-
+	//console.log("req.body = ", req.body);
 	const city = req.body;
-	
 
-	const ret_city = await addNewCity(city);
-	console.log("ret_city = ", ret_city);
+	const ret_city = await addCity(city);
+	//console.log("ret_city = ", ret_city);
 
-	var myJSON = JSON.stringify(ret_city);
-	console.log("myJSON = ", myJSON);
-
-	res.json({myJSON});
+	res.json(ret_city);
 };
 
 const retrieveCityRoute = async (req, res) => {
-	console.log("req.body = ", req.body);
+//	console.log("req.body = ", req.body);
 	
-	const country = req.body;
+	const requestItem = req.body;
 
-	const ret_city = await retrieveCity(country);
+	const ret_city = await getCityByCountry(requestItem.country);
 	console.log("ret_city = ", ret_city);
 
-	console.log("addedCity = ", ret_city.addedCity);
-
-	var myJSON = JSON.stringify(ret_city);
-	console.log("myJSON = ", myJSON);
-
-	res.json({myJSON});
+	res.json(ret_city);
 };
 
 const updateThemeRoute = async (req, res) => {

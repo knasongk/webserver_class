@@ -97,83 +97,85 @@ const makeRequest_2 = async (url, params) => {
 	try {
 	  const response = await fetch(url, params);
 
-	if(!response.ok) throw new Error(response.statusText);
+	  if(!response.ok) throw new Error(response.statusText);
 
-	const responseJson = await response.json();
-
-
-       	console.log("responseJson.myJSON = ", responseJson.myJSON);
-
-	alert(responseJson.myJSON); 
-
-		/*
-	responseObj = JSON.parse(responseJson.myJSON);
-	console.log("responseObj.addedCity.dest_city = ", 
-		responseObj.addedCity.dest_city);
-
-	alert("Insert " + responseObj.addedCity.dest_city + " successfully");
-	*/
-
-
-	return true;
+	  const responseJson = await response.json();
+	
+	  return responseJson;
 	}  
 	catch(err) {
-		console.error(err);
-		alert('an error has occurred');
+	  console.error(err);
 	};
-
-	return false;
 };
 
 const addCity = async e => {
 	e.preventDefault();
 
+	try {
 	const dest = parseAddForm('addForm');
-	console.log("dest.id = ", dest.id);
-	console.log("dest.city = ", dest.city);
-	console.log("dest.country = ", dest.country);
-	console.log("dest.language = ", dest.language);
-
-	/* confirm that the body gets the correct info from the gui */
-	/* note: the addCityRoute() in the src/index.js somehow 
-	 * cannot read the req.body.  Not sure why not!
-	 * <need help>
-	 */
+	//console.log("dest.id = ", dest.id);
+	//console.log("dest.city = ", dest.city);
+	//console.log("dest.country = ", dest.country);
+	//console.log("dest.language = ", dest.language);
 
 	var body_Jason = JSON.stringify(dest);
-	console.log("body_Jason = ", body_Jason);
+	//console.log("body_Jason = ", body_Jason);
 	
-	const wasSuccess = await makeRequest_2('/api/addCity', {
+	const retCity = await makeRequest_2('/api/addCity', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify(dest)
 	});
 
-	if(!wasSuccess) alert ('addCity failed');
+	//console.log("retCity is ", retCity.dest_city);
+
+	if(retCity.dest_city === '')
+		alert('Fail to add city ' + dest.city);
+	else
+		alert('The city ' + retCity.dest_city + ' was added successfully');
+	}
+	catch(err) {
+		console.error(err);
+		alert('Fail to add city ' + dest.city);
+	}
 };
 
 const retrieveCity = async e => {
 	e.preventDefault();
 
+	try {
 	const dest = parseRetrieveForm('retrieveForm');
-	console.log("dest.country = ", dest.country);
-
-	/* confirm that the body gets the correct info from the gui */
-	/* note: the retrieveCityRoute() in the src/index.js somehow 
-	 * cannot read the req.body.  Not sure why not!
-	 * <need help>
-	 */
+//	console.log("dest.country = ", dest.country);
 
 	var body_Jason = JSON.stringify(dest);
-	console.log("body_Jason = ", body_Jason);
+//	console.log("body_Jason = ", body_Jason);
 	
-	const wasSuccess = await makeRequest_2('/api/retrieveCity', {
+	const retCityList = await makeRequest_2('/api/retrieveCity', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify(dest)
 	});
 
-	if(!wasSuccess) alert ('retrieveCity failed');
+	var cityStr = '';
+
+	if(retCityList.length > 0)
+	{
+		for(i=0; i<retCityList.length; i++)
+		{
+                  console.log("city = ", retCityList[i].city);
+		  cityStr += (retCityList[i].city + ', ');
+		}
+		console.log("cityStr = ", cityStr);
+		alert(cityStr);
+	}
+	else
+		alert('Cannot find city associated with country ' + dest.country );
+
+         }
+	catch(err) {
+		console.error(err);
+		alert('Fail find city for country' + dest.country);
+	}
 };
 
 const updateTheme = async e => {
@@ -182,12 +184,6 @@ const updateTheme = async e => {
 	const theme = parseUpdateForm('updateForm');
 	console.log("theme.id = ", theme.id);
 	console.log("theme.description = ", theme.description);
-
-	/* confirm that the body gets the correct info from the gui */
-	/* note: the updatePrefRoute() in the src/index.js somehow 
-	 * cannot read the req.body.  Not sure why not!
-	 * <need help>
-	 */
 
 	var body_Jason = JSON.stringify(theme);
 	console.log("body_Jason = ", body_Jason);
@@ -206,12 +202,6 @@ const deleteCity = async e => {
 
 	const dest = parseDeleteForm('deleteForm');
 	console.log("dest.id = ", dest.id);
-
-	/* confirm that the body gets the correct info from the gui */
-	/* note: the addCityRoute() in the src/index.js somehow 
-	 * cannot read the req.body.  Not sure why not!
-	 * <need help>
-	 */
 
 	var body_Jason = JSON.stringify(dest);
 	console.log("body_Jason = ", body_Jason);
