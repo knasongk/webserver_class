@@ -11,9 +11,6 @@ export const retrieveCity = async Item => {
 	console.log("Item = ", Item);
 	console.log("Item.country = ", Item.country);
 	const retrieveItem=await getCityByCountry(Item.country);
-
-	let kstr = JSON.stringify(retrieveItem);
-	console.log("kstr = ", kstr);
 	
 	return {retrieveItem};
 };

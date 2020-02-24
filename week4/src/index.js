@@ -49,25 +49,31 @@ const retrieveCityRoute = async (req, res) => {
 };
 
 const updateThemeRoute = async (req, res) => {
-	console.log("req.body = ", req.body);
+//	console.log("req.body = ", req.body);
 
 	const theme = req.body;
 
-	console.log("updatethemeRoute: theme.id = ", theme.id);
-	console.log("updatethemeRoute: theme.desc = ", theme.description);
-	await updateTheme(theme);
+//	console.log("updatethemeRoute: theme.id = ", theme.id);
+//	console.log("updatethemeRoute: theme.desc = ", theme.description);
+	const retStat = await updateTheme(theme);
 
-	res.json({success: true});
+	if(retStat == true)
+       		res.json({success: true});
+	else
+       		res.json({success: false});
 };
 
 const deleteCityRoute = async (req, res) => {
-	console.log("req.body = ", req.body);
+//	console.log("req.body = ", req.body);
 	
 	const city = req.body;
 
-	await deleteCity(city.id);
+	const retStat = await deleteCity(city.id);
 
-	res.json({success: true});
+	if(retStat == true)
+       		res.json({success: true});
+	else
+       		res.json({success: false});
 };
 
 app.get('/api/tour/:id', tourPackage); 

@@ -26,6 +26,6 @@ export const addNewCity = async newItem => {
 	return {addedCity};
 	} catch(e) {
 		console.error(e);
-		return({"status":"fail"}); 
+		return({dest_city:''}); 
 	}
 };

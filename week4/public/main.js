@@ -188,13 +188,16 @@ const updateTheme = async e => {
 	var body_Jason = JSON.stringify(theme);
 	console.log("body_Jason = ", body_Jason);
 	
-	const wasSuccess = await makeRequest('/api/updateTheme', {
+	const SuccessStat = await makeRequest('/api/updateTheme', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify(theme)
 	});
 
-	if(!wasSuccess) alert ('updateTheme failed');
+	if(SuccessStat == true)
+		alert('updateTheme success');
+	else
+		alert('updateTheme fail');
 };
 
 const deleteCity = async e => {
@@ -206,13 +209,16 @@ const deleteCity = async e => {
 	var body_Jason = JSON.stringify(dest);
 	console.log("body_Jason = ", body_Jason);
 	
-	const wasSuccess = await makeRequest('/api/deleteCity', {
+	const SuccessStat = await makeRequest('/api/deleteCity', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify(dest)
 	});
 
-	if(!wasSuccess) alert ('deleteCity failed');
+	if(SuccessStat == true)
+		alert('updateTheme success');
+	else
+		alert('updateTheme fail');
 };
 	
 
