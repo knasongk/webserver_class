@@ -4,6 +4,9 @@
   "description": "uci web server class",
   "main": "index.js",
   "scripts": {
+    "migrate": "knex migrate:latest",
+    "drop_db": "dropdb -U ken travel",
+    "create_db": "createdb -U ken travel",
     "start": "node -r esm week2/src/index.js",
     "test": "mocha -r esm week2/test/tests.js"
   },

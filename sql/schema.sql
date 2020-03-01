@@ -1,16 +1,20 @@
-CREATE TABLE IF NOT EXISTS users (
-	id integer PRIMARY KEY,
-	display_name varchar(100), 
-	username varchar(100), 
-	email varchar(100), 
-	created_on timestamp, 
-	last_login timestamp);
-
 CREATE TABLE IF NOT EXISTS destinations (
 	id integer PRIMARY KEY, 
 	city varchar(50), 
 	country varchar(50), 
 	language varchar(50));
+
+CREATE TABLE IF NOT EXISTS users (
+	id serial NOT NULL PRIMARY KEY,
+	display_name varchar(100) NOT NULL, 
+	username varchar(100) NOT NULL, 
+	destination_id integer NOT NULL,
+	email varchar(100) NOT NULL, 
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP, 
+	update_at  timestamp DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (destination_id) REFERENCES destinations(id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE);
 
 CREATE TABLE IF NOT EXISTS preferences (
 	id integer PRIMARY KEY, 

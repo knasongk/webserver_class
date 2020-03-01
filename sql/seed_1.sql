@@ -1,4 +1,3 @@
-
 INSERT INTO destinations (id, city, country, language) VALUES
    (1, 'Melbourne', 'Australia', 'English'),
    (2, 'Sydney', 'Australia', 'English'),
@@ -41,35 +40,6 @@ INSERT INTO preferences (id, mood) VALUES
    (14, 'cultural'),
    (15, 'tourist spots'),
    (16, 'off tourist trail');
-
-INSERT INTO age_groups (id, category, min_age, max_age) VALUES
-   (1, 'children', 0, 18),
-   (2, 'teens', 12, 18),
-   (3, 'young adults', 19, 26),
-   (4, 'mature adults', 27, 45),
-   (5, 'middle ages', 46, 56),
-   (6, 'older adults', 57, 66),
-   (7, 'retirees', 67, 100);
-
-
-INSERT INTO age_preferences (age_id, preference_id, theme_id) VALUES 
-   (1, 2, 1),
-   (1, 2, 4),
-   (2, 3, 4),
-   (7, 7, 3),
-   (1, 2, 4);
-
-INSERT INTO budgets (id, category, min_cost, max_cost) VALUES
-   (1, 'low', 20.0, 99.0),
-   (2, 'medium', 100.0, 399.0),
-   (3, 'high', 400.0, 999.0),
-   (4, 'expensive', 1000.0, 10000.0);
-
-INSERT INTO themes (id, activity, description, budget_id, preference_id) VALUES
-   (1, 'big bus tour', 'get on and off big city bus', 1, 1),
-   (2, 'galaria shopping', 'go shopping all malls', 3, 2),
-   (3, 'night clubs', 'go clubbing', 3, 3),
-   (4, 'soccer match', 'go to local club team match', 2, 4);
 
 INSERT INTO city_preferences (preference_id, city_id) VALUES
    (2,1), (3,2), (3,3), (3,4), (4,5), (6,7), (8,8),
