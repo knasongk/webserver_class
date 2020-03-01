@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
     "drop_db": "dropdb -U ken travel",
     "create_db": "createdb -U ken travel",
-    "start": "node -r esm week2/src/index.js",
-    "test": "mocha -r esm week2/test/tests.js"
+    "seed1": "knex seed:run --specific=seed_tables.js",
+    "seed2": "knex seed:run --specific=preferences.js",
+    "reset-db": "npm run drop_db; npm run create_db; npm run migrate; npm run seed1; npm run seed2",
+    "start": "node -r esm src/index.js",
+    "test": "mocha -r esm test/tests.js"
   },
   "repository": {
     "type": "git",
