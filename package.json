@@ -12,7 +12,7 @@
     "seed2": "knex seed:run --specific=preferences.js",
     "reset-db": "npm run drop_db; npm run create_db; npm run migrate; npm run seed1; npm run seed2",
     "start": "node -r esm src/index.js",
-    "test": "mocha -r esm test/tests.js"
+    "test": "mocha --exit -r esm test/tests.js"
   },
   "repository": {
     "type": "git",
