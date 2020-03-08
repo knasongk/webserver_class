@@ -1,0 +1,44 @@
+{
+  "name": "webserver_class",
+  "version": "1.0.0",
+  "description": "uci web server class",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "drop_db": "dropdb -U ken travel",
+    "create_db": "createdb -U ken travel",
+    "seed1": "knex seed:run --specific=seed_tables.js",
+    "seed2": "knex seed:run --specific=preferences.js",
+    "reset-db": "npm run drop_db && npm run create_db && npm run migrate && npm run seed1 && npm run seed2",
+    "start": "node -r esm src/index.js",
+    "test": "mocha --exit -r esm test/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knasongk/webserver_class.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knasongk/webserver_class/issues"
+  },
+  "homepage": "https://github.com/knasongk/webserver_class#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.6.0",
+    "knex": "^0.20.10",
+    "lint": "^0.7.0",
+    "lokka": "^1.7.0",
+    "lokka-transport-http": "^1.6.1",
+    "mocha": "^7.0.1",
+    "morgan": "^1.9.1",
+    "node-fetch": "^2.6.0",
+    "pg": "^7.18.1"
+  }
+}

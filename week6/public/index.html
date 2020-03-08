@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+
+<!-- Creating web pages showing vacation places that each of us have visited or would 
+    like to visit.
+      
+      I&C SCI_X 472.15
+
+      Week 2: main page
+      02-03-20
+    -->
+<head>
+    <title>Vacation  Spots</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="Ken Nasongkhla "  />
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="main.js"></script>
+</head>
+
+<body>
+  <h1 id="top">Places to Visit</h1>
+
+  <br>
+  <button id="tour1">Get tour #1 information</button>
+  <button id="tour2">Get tour #2 information</button>
+
+  <!--- Just examples of images.  You can add any pictures of your favorite places -->
+
+   <h3 id="thailand">Bangkok, Thailand</h3>
+  <img src="http://localhost:8080/thai_palace.jpg"
+       width="600" height="450"
+      title="Thai palace"\>
+  <br><br>
+
+  <h2 id="adding_new_city"> ADD NEW CITY</h1>
+  <form id="addForm">
+	 <p>
+	 <label>ID: <input name="id" placeholder="18"/></label>
+	 </p>
+	 <p>
+	 <label>City: <input name="city" placeholder="Bangkok"/></label>
+	 </p>
+	 <p>
+	 <label>Country: <input name="country" placeholder="Thailand"/></label>
+	 </p>
+	 <p>
+	 <label>Language: <input name="language" placeholder="Thai"/></label>
+	 </p>
+	 <input type="submit" />
+  </form>
+
+  <h2 id="retrieve_city"> RETRIEVE LIST OF CITIES FROM THE SELECTED COUNTRY</h1>
+  <form id="retrieveForm">
+	 <p>
+	 <label>Country: <input name="country" placeholder="Italy"/></label>
+	 </p>
+	 <input type="submit" />
+  </form>
+
+  <h2 id="update_theme"> UPDATE THEME DESCRIPTION</h1>
+  <form id="updateForm">
+	 <p>
+	 <label>ID: <input name="id" placeholder="3"/></label>
+	 </p>
+	 <p>
+	 <label>DESCRIPTION: <input name="description" placeholder="listen to live music"/></label>
+	 </p>
+	 <input type="submit" />
+  </form>
+
+  <h2 id="delete_city"> DELETE A CITY</h1>
+  <form id="deleteForm">
+	 <p>
+	 <label>ID: <input name="id" placeholder="7"/></label>
+	 </p>
+	 <input type="submit" />
+  </form>
+	 
+
+</body>
+
+</html>
