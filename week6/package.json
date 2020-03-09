@@ -11,7 +11,7 @@
     "seed1": "knex seed:run --specific=seed_tables.js",
     "seed2": "knex seed:run --specific=seed_tables_preferences.js",
     "seed": "knex seed:run",
-    "reset-db": "npm run drop_db && npm run create_db && npm run migrate && npm run seed && npm run test",
+    "reset-db": "npm run drop_db && npm run create_db && npm run migrate && npm run seed",
     "start": "node -r esm src/index.js",
     "test": "mocha --exit -r esm test/tests.js"
   },
