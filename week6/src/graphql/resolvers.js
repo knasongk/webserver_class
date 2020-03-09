@@ -11,16 +11,11 @@ const resolvers = {
 	   const { country } = args;
            console.log("country = ", country);
 
-	   const cities = await getCityByCountry(country);
-	   console.log("return list of cities = ", cities);
-
-	   // just logging what I assume the resolvers will return to
-	   // the calling client
-	   const resJason = JSON.stringify(cities);
-	   console.log("resJason = ", resJason);
 	   
-	   // based on your comment, I do not need to stringify the response here
-	   return cities; 
+	   const {city} = await getCityByCountry(country);
+	   console.log("in resolvers getCity: city = ", city);
+
+	   return city; 
    },
 };
 

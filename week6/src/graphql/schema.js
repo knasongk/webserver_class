@@ -5,9 +5,15 @@ export default buildSchema(`
 
    type Destinations {
       id: ID!
-      cities: [String]
+      city: [String]
       country: String
    }
+
+   type Destination {
+      city: [String]
+      country: String
+   }
+
 
    type Users {
       id: ID!
@@ -28,7 +34,7 @@ export default buildSchema(`
    }
 
    type Query {
-      getCity(country: String!): Destinations
+      getCity(country: String!): [Destination]
    }
    
 `);
