@@ -1,5 +1,5 @@
 const destSelection = `{
-  city
+  cities
 }`;
 
 

@@ -5,7 +5,7 @@ export default buildSchema(`
 
    type Destinations {
       id: ID!
-      city: [String]
+      cities: [String]
       country: String
    }
 
