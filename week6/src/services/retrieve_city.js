@@ -1,10 +1,13 @@
 import knex from '../database'
 export const getCityByCountry = async country => {
-	//console.log("getCitybyCountry for country = ", country);
-	const results = await knex('destinations')
+	console.log("getCitybyCountry for country = ", country);
+	var city = await knex('destinations')
 	.where({country})
 	.select('city');
-	return results;
+
+	console.log("city = ", city);
+//	return results;
+	return {city};
 };
 
 export const retrieveCity = async Item => {

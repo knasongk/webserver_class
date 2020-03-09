@@ -1,3 +1,8 @@
+const destSelection = `{
+  city
+}`;
+
+
 window.onload = function() {
     var button1 = document.querySelector("#tour1");
     // add event listener to the id tour1 click
@@ -95,11 +100,22 @@ const makeRequest = async (url, params) => {
 
 const makeRequest_2 = async (url, params) => {
 	try {
+
+    	console.log("in makeRequest_2");
+
 	  const response = await fetch(url, params);
 
 	  if(!response.ok) throw new Error(response.statusText);
 
 	  const responseJson = await response.json();
+
+	// problem:  Cannot get the correct data from the server resolvers getCity()
+	console.log("makeRequest_2: responseJson.data = ", responseJson.data);
+	console.log("makeRequest_2: responseJson.errors = ", responseJson.erros);
+
+          const { data, errors } = responseJson;
+
+	console.log("makeRequest_2: data = ", data);
 	
 	  return responseJson;
 	}  
@@ -145,6 +161,51 @@ const retrieveCity = async e => {
 
 	try {
 	const dest = parseRetrieveForm('retrieveForm');
+	console.log("dest.country = ", dest.country);
+
+	const query = `query ksnGetCity { getCity(country: "${dest.country}") ${destSelection} }`;
+	console.log("query = ", query);
+
+		
+	var body_Jason = JSON.stringify({query});
+	console.log("body_Jason = ", body_Jason);
+		
+	const retCityList = await makeRequest_2('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query}) 
+	});
+
+
+	var cityStr = '';
+
+	if(retCityList.length > 0)
+	{
+		for(i=0; i<retCityList.length; i++)
+		{
+                  console.log("city = ", retCityList[i].city);
+		  cityStr += (retCityList[i].city + ', ');
+		}
+		console.log("cityStr = ", cityStr);
+		alert(cityStr);
+	}
+	else
+		alert('Cannot find city associated with country ' + dest.country );
+
+
+         }
+	catch(err) {
+		console.error(err);
+		alert('Fail find city for country' + dest.country);
+	}
+};
+
+/*
+const retrieveCity = async e => {
+	e.preventDefault();
+
+	try {
+	const dest = parseRetrieveForm('retrieveForm');
 //	console.log("dest.country = ", dest.country);
 
 	var body_Jason = JSON.stringify(dest);
@@ -177,6 +238,7 @@ const retrieveCity = async e => {
 		alert('Fail find city for country' + dest.country);
 	}
 };
+*/
 
 const updateTheme = async e => {
 	e.preventDefault();
