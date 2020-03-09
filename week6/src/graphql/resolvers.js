@@ -7,24 +7,20 @@ import { deleteCity } from '../services/delete_city.js';
 const resolvers = {
    getCity: async (args, request) => {
 	   console.log("in getCity of the resolvers");
+
 	   const { country } = args;
            console.log("country = ", country);
-	   const getCity = await getCityByCountry(country);
 
-	   console.log("getCity = ", getCity);
+	   const cities = await getCityByCountry(country);
+	   console.log("return list of cities = ", cities);
 
-	   // not sure if need to add data field
-	   const dataCity = {data:{getCity}};
-	   console.log("dataCity = ", dataCity);
-           
-	   // not sure if we need to stringify before returning the response
-	   const resJason = JSON.stringify(dataCity);
-	   console.log("resJason = ", resJason); // log the returning string
+	   // just logging what I assume the resolvers will return to
+	   // the calling client
+	   const resJason = JSON.stringify(cities);
+	   console.log("resJason = ", resJason);
 	   
-	   return resJason; 
-
-	   // somehow the client makeRequest_2() shows responseJson.data = {getCity:null}
-	   // so I am unable to read the response data returning from this getCity resolvers.
+	   // based on your comment, I do not need to stringify the response here
+	   return cities; 
    },
 };
 

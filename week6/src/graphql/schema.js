@@ -5,8 +5,8 @@ export default buildSchema(`
 
    type Destinations {
       id: ID!
-      city: String!
-      country: String!
+      city: [String]
+      country: String
    }
 
    type Users {
