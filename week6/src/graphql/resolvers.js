@@ -16,8 +16,6 @@ const resolvers = {
    },
    deleteCity: async({ id }) => {
 	   try {
-	      //console.log(" deleteCity id = ", id);
-
 	      const retStat = await deleteCity(parseFloat(id));
 
 	      if(retStat == true) 
@@ -32,7 +30,6 @@ const resolvers = {
    },
    updateTheme: async(args, request) => {
 	   try {
-	      //console.log("in updateTheme");
 	      const retStat = await updateTheme(args);
 
 	      if(retStat == true) 
@@ -43,6 +40,16 @@ const resolvers = {
 	   }
 	   catch(err) {
 		   return { wasSuccessful: false };
+           }
+    },
+   addCity: async(args, request) => {
+	   try {
+	      const city = await addCity(args);
+	      //console.log("return city = ", city);
+              return city;
+	   }
+	   catch(err) {
+		   return city; // city will be blank
            }
     },
 

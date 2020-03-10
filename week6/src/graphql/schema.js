@@ -42,6 +42,7 @@ export default buildSchema(`
    type Mutation {
        deleteCity(id: ID!): SuccessResponse
        updateTheme(id: ID!, description: String): SuccessResponse
+       addCity(id: ID!, city: String!, country: String!, language: String!): Destination 
    }
    
 `);

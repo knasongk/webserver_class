@@ -79,26 +79,6 @@ const parseDeleteForm = formId => {
 ////////////////////////////////////////////////////////////////////
 
 const makeRequest = async (url, params) => {
-        try {
-	  const response = await fetch(url, params);
-
-        if(!response.ok) throw new Error(response.statusText);
-
-	   const responseJson = await response.json();
-
-
-   	if(!responseJson.success) throw new Error(responseJson.message);
-	   return true;
-	}  
-	catch(err) {
-		console.error(err);
-		alert('an error has occurred');
-	};
-
-	return false;
-};
-
-const makeRequest_2 = async (url, params) => {
 	try {
 
 	  const response = await fetch(url, params);
@@ -111,7 +91,7 @@ const makeRequest_2 = async (url, params) => {
 	}  
 	catch(err) {
 	  console.error(err);
-	  alert('an error has occurred in makeRequest_2');
+	  alert('an error has occurred in makeRequest');
 	};
 };
 
@@ -125,21 +105,23 @@ const addCity = async e => {
 	//console.log("dest.country = ", dest.country);
 	//console.log("dest.language = ", dest.language);
 
-	var body_Jason = JSON.stringify(dest);
-	//console.log("body_Jason = ", body_Jason);
-	
-	const retCity = await makeRequest_2('/api/addCity', {
+	const query = `mutation { addCity(id: "${dest.id}", city: "${dest.city}", country: "${dest.country}", language: "${dest.language}") ${ citySelection }}`;
+
+	const retCity = await makeRequest('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify(dest)
+		body: JSON.stringify({query})
 	});
 
-	//console.log("retCity is ", retCity.dest_city);
+        const { data, errors } = retCity;
 
-	if(retCity.dest_city === '')
+	console.log("retCity is ", data.addCity.city);
+
+	if(data.addCity.city === '')
 		alert('Fail to add city ' + dest.city);
 	else
-		alert('The city ' + retCity.dest_city + ' was added successfully');
+		alert('The city ' + data.addCity.city + ' was added successfully');
+
 	}
 	catch(err) {
 		console.error(err);
@@ -160,7 +142,7 @@ const retrieveCity = async e => {
 	 // var body_Jason = JSON.stringify({query});
 	  //console.log("body_Jason = ", body_Jason);
 		
-          const retCityList = await makeRequest_2('/api/graphql', {
+          const retCityList = await makeRequest('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify({query}) 
@@ -199,12 +181,9 @@ const updateTheme = async e => {
 	console.log("theme.id = ", theme.id);
 	console.log("theme.description = ", theme.description);
 
-	//var body_Jason = JSON.stringify(theme);
-	//console.log("body_Jason = ", body_Jason);
-	
 	const query = `mutation { updateTheme(id: "${theme.id}", description: "${theme.description}") { wasSuccessful }}`;
 
-	const retStat = await makeRequest_2('/api/graphql', {
+	const retStat = await makeRequest('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify({query})
@@ -226,12 +205,9 @@ const deleteCity = async e => {
 	const dest = parseDeleteForm('deleteForm');
 	console.log("dest.id = ", dest.id);
 
-	//var body_Jason = JSON.stringify(dest);
-	//console.log("body_Jason = ", body_Jason);
-
 	const query = `mutation { deleteCity(id: "${dest.id}") { wasSuccessful }}`;
 
-	const retStat = await makeRequest_2('/api/graphql', {
+	const retStat = await makeRequest('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
 		body: JSON.stringify({query})
