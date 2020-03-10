@@ -9,9 +9,8 @@ export default buildSchema(`
       country: String
    }
 
-   type Destination {
+   type Cities {
       city: [String]
-      country: String
    }
 
 
@@ -34,7 +33,7 @@ export default buildSchema(`
    }
 
    type Query {
-      getCity(country: String!): [Destination]
+      cityByCountry(country: String!): Cities 
    }
    
 `);

@@ -5,15 +5,15 @@ import { updateTheme } from '../services/update_theme.js';
 import { deleteCity } from '../services/delete_city.js';
 
 const resolvers = {
-   getCity: async (args, request) => {
-	   console.log("in getCity of the resolvers");
+   cityByCountry: async (args, request) => {
+	   console.log("in cityByCountry of the resolvers");
 
 	   const { country } = args;
            console.log("country = ", country);
 
 	   
 	   const {city} = await getCityByCountry(country);
-	   console.log("in resolvers getCity: city = ", city);
+	   console.log("in resolvers cityByCountry: city = ", city);
 
 	   return city; 
    },

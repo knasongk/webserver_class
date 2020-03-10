@@ -1,4 +1,4 @@
-const destSelection = `{
+const citySelection = `{
   city
 }`;
 
@@ -163,7 +163,7 @@ const retrieveCity = async e => {
 	const dest = parseRetrieveForm('retrieveForm');
 	console.log("dest.country = ", dest.country);
 
-	const query = `query ksnGetCity { getCity(country: "${dest.country}") ${destSelection} }`;
+	const query = `query { cityByCountry(country: "${dest.country}") ${citySelection} }`;
 	console.log("query = ", query);
 
 		
