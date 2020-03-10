@@ -29,7 +29,23 @@ const resolvers = {
 	   catch(err) {
 		   return { wasSuccessful: false };
            }
-    }
+   },
+   updateTheme: async(args, request) => {
+	   try {
+	      //console.log("in updateTheme");
+	      const retStat = await updateTheme(args);
+
+	      if(retStat == true) 
+                 return { wasSuccessful: true };
+	      else 
+                 return { wasSuccessful: false };
+
+	   }
+	   catch(err) {
+		   return { wasSuccessful: false };
+           }
+    },
+
 
 };
 

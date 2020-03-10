@@ -199,19 +199,25 @@ const updateTheme = async e => {
 	console.log("theme.id = ", theme.id);
 	console.log("theme.description = ", theme.description);
 
-	var body_Jason = JSON.stringify(theme);
-	console.log("body_Jason = ", body_Jason);
+	//var body_Jason = JSON.stringify(theme);
+	//console.log("body_Jason = ", body_Jason);
 	
-	const SuccessStat = await makeRequest('/api/updateTheme', {
+	const query = `mutation { updateTheme(id: "${theme.id}", description: "${theme.description}") { wasSuccessful }}`;
+
+	const retStat = await makeRequest_2('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify(theme)
+		body: JSON.stringify({query})
 	});
 
-	if(SuccessStat == true)
-		alert('Succeed to updateTheme with description ' + theme.description);
+        const { data, errors } = retStat;
+
+	console.log("data.updateTheme.wasSuccessful = ", data.updateTheme.wasSuccessful);
+
+	if(data.updateTheme.wasSuccessful)
+		alert('Succeed in update theme id' + theme.id);
 	else
-		alert('Fail to updateTheme with description ' + theme.description);
+		alert('Fail to update theme id ' + theme.id);
 };
 
 const deleteCity = async e => {
@@ -220,8 +226,8 @@ const deleteCity = async e => {
 	const dest = parseDeleteForm('deleteForm');
 	console.log("dest.id = ", dest.id);
 
-	var body_Jason = JSON.stringify(dest);
-	console.log("body_Jason = ", body_Jason);
+	//var body_Jason = JSON.stringify(dest);
+	//console.log("body_Jason = ", body_Jason);
 
 	const query = `mutation { deleteCity(id: "${dest.id}") { wasSuccessful }}`;
 
@@ -231,7 +237,7 @@ const deleteCity = async e => {
 		body: JSON.stringify({query})
 	});
 
-          const { data, errors } = retStat;
+        const { data, errors } = retStat;
 
 	console.log("data.deleteCity.wasSuccessful = ", data.deleteCity.wasSuccessful);
 

@@ -9,14 +9,9 @@ export default buildSchema(`
       country: String
    }
 
-   type Cities {
-      city: [String]
-   }
-
    type Destination {
       city: String
    }
-
 
    type Users {
       id: ID!
@@ -46,6 +41,7 @@ export default buildSchema(`
 
    type Mutation {
        deleteCity(id: ID!): SuccessResponse
+       updateTheme(id: ID!, description: String): SuccessResponse
    }
    
 `);
