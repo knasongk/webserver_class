@@ -109,11 +109,11 @@ const makeRequest_2 = async (url, params) => {
 
 	  const responseJson = await response.json();
 
-	// problem:  Cannot get the correct data from the server resolvers getCity()
+	// problem:  Cannot get the correct data from the server resolvers cityByCountry()
 	console.log("makeRequest_2: responseJson.data = ", responseJson.data);
 	console.log("makeRequest_2: responseJson.errors = ", responseJson.erros);
 
-          const { data, errors } = responseJson;
+        const { data, errors } = responseJson;
 
 	console.log("makeRequest_2: data = ", data);
 	
@@ -175,23 +175,6 @@ const retrieveCity = async e => {
 		method: 'POST',
 		body: JSON.stringify({query}) 
 	});
-
-
-	var cityStr = '';
-
-	if(retCityList.length > 0)
-	{
-		for(i=0; i<retCityList.length; i++)
-		{
-                  console.log("city = ", retCityList[i].city);
-		  cityStr += (retCityList[i].city + ', ');
-		}
-		console.log("cityStr = ", cityStr);
-		alert(cityStr);
-	}
-	else
-		alert('Cannot find city associated with country ' + dest.country );
-
 
          }
 	catch(err) {
