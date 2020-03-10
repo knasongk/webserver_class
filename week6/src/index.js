@@ -2,6 +2,7 @@ import express from 'express'
 import graphqlHTTP from 'express-graphql'
 import resolvers from './graphql/resolvers'
 import schema from './graphql/schema'
+import { getTourById } from './tours.js';
 
 const app = express();
 app.use(express.json());
@@ -17,6 +18,18 @@ app.use('/api/graphql', graphqlHTTP({
 	rootValue: resolvers,
 	graphiql: env === 'development',
 }));
+
+const tourPackage = (req, res) => {
+        const { id } = req.params || {};
+        //console.log("id = ", id);
+
+        const tour = getTourById(parseFloat(id));
+
+        //console.log("tour = ", tour);
+        res.json(tour);
+};
+
+app.get('/api/tour/:id', tourPackage);
 
 var port = process.env.PORT || 8080;
 
