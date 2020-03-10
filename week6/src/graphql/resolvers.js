@@ -6,14 +6,11 @@ import { deleteCity } from '../services/delete_city.js';
 
 const resolvers = {
    cityByCountry: async (args, request) => {
-	   console.log("in cityByCountry of the resolvers");
-
 	   const { country } = args;
-           console.log("country = ", country);
+           //console.log("country = ", country);
 
-	   
 	   const {city} = await getCityByCountry(country);
-	   console.log("in resolvers cityByCountry: city = ", city);
+	   //console.log("resolvers cityByCountry returns: ", city);
 
 	   return city; 
    },
