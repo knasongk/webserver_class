@@ -36,8 +36,16 @@ export default buildSchema(`
        preference_id: ID!
    }
 
+   type SuccessResponse {
+      wasSuccessful: Boolean!
+   }
+
    type Query {
       cityByCountry(country: String!): [Destination] 
+   }
+
+   type Mutation {
+       deleteCity(id: ID!): SuccessResponse
    }
    
 `);

@@ -56,7 +56,19 @@ exports.up = async knex => {
            .onUpdate('cascade');
      table.primary(['city_id', 'preference_id']);
      });
-	
+
+// create themes table
+   await knex.schema.createTable('themes', table => {
+     table.increments();
+     table.string('activity', 200)
+	   .unique().notNullable();
+     table.text('description');
+     table.integer('preference_id')
+	   .notNullable();
+     table.foreign('preference_id').references('preferences.id')
+	   .onDelete('cascade')
+	   .onUpdate('cascade');
+     });
 };
 
 exports.down = async knex => {
@@ -96,5 +108,12 @@ exports.down = async knex => {
      table.integer('preference_id');
      });
 	
+// create themes table
+   await knex.schema.createTable('themes', table => {
+     table.increments();
+     table.string('activity', 200);
+     table.text('description');
+     table.integer('preference_id');
+     });
 };
 

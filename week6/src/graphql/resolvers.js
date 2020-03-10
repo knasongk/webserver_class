@@ -7,13 +7,30 @@ import { deleteCity } from '../services/delete_city.js';
 const resolvers = {
    cityByCountry: async (args, request) => {
 	   const { country } = args;
-           //console.log("country = ", country);
+           //console.log("cityByCountry country = ", country);
 
 	   const {city} = await getCityByCountry(country);
 	   //console.log("resolvers cityByCountry returns: ", city);
 
 	   return city; 
    },
+   deleteCity: async({ id }) => {
+	   try {
+	      //console.log(" deleteCity id = ", id);
+
+	      const retStat = await deleteCity(parseFloat(id));
+
+	      if(retStat == true) 
+                 return { wasSuccessful: true };
+	      else 
+                 return { wasSuccessful: false };
+
+	   }
+	   catch(err) {
+		   return { wasSuccessful: false };
+           }
+    }
+
 };
 
 export default resolvers;

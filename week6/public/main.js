@@ -107,15 +107,6 @@ const makeRequest_2 = async (url, params) => {
 
 	  const responseJson = await response.json();
 
-/*
-          const { data, errors } = responseJson;
-
-	  //console.log("makeRequest_2: data = ", data);
-	  console.log("makeRequest2: data.cityByCountry.length = ", data.cityByCountry.length);
-	  console.log("makeRequest_2: data.cityByCountry.city[0] = ", data.cityByCountry[0].city);
-	  console.log("makeRequest_2: data.cityByCountry.city[1] = ", data.cityByCountry[1].city);
-*/
-	
 	  return responseJson;
 	}  
 	catch(err) {
@@ -201,46 +192,6 @@ const retrieveCity = async e => {
 	}
 };
 
-/*
-const retrieveCity = async e => {
-	e.preventDefault();
-
-	try {
-	const dest = parseRetrieveForm('retrieveForm');
-//	console.log("dest.country = ", dest.country);
-
-	var body_Jason = JSON.stringify(dest);
-//	console.log("body_Jason = ", body_Jason);
-	
-	const retCityList = await makeRequest_2('/api/retrieveCity', {
-		headers: {'Content-Type': 'application/json' },
-		method: 'POST',
-		body: JSON.stringify(dest)
-	});
-
-	var cityStr = '';
-
-	if(retCityList.length > 0)
-	{
-		for(i=0; i<retCityList.length; i++)
-		{
-                  console.log("city = ", retCityList[i].city);
-		  cityStr += (retCityList[i].city + ', ');
-		}
-		console.log("cityStr = ", cityStr);
-		alert(cityStr);
-	}
-	else
-		alert('Cannot find city associated with country ' + dest.country );
-
-         }
-	catch(err) {
-		console.error(err);
-		alert('Fail find city for country' + dest.country);
-	}
-};
-*/
-
 const updateTheme = async e => {
 	e.preventDefault();
 
@@ -271,19 +222,26 @@ const deleteCity = async e => {
 
 	var body_Jason = JSON.stringify(dest);
 	console.log("body_Jason = ", body_Jason);
-	
-	const SuccessStat = await makeRequest('/api/deleteCity', {
+
+	const query = `mutation { deleteCity(id: "${dest.id}") { wasSuccessful }}`;
+
+	const retStat = await makeRequest_2('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify(dest)
+		body: JSON.stringify({query})
 	});
 
-	if(SuccessStat == true)
+          const { data, errors } = retStat;
+
+	console.log("data.deleteCity.wasSuccessful = ", data.deleteCity.wasSuccessful);
+
+	if(data.deleteCity.wasSuccessful)
 		alert('Succeed to delete city id' + dest.id);
 	else
 		alert('Fail to delete city id ' + dest.id);
+
 };
-	
+
 
 //when the button1 is click call showTour1() to fetch the tour1 from the server 
 function showTour1() {
