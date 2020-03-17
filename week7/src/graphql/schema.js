@@ -40,8 +40,6 @@ export default buildSchema(`
       username: String!
    }
 
-   
-
    type Query {
       cityByCountry(country: String!): [Destination] 
    }
@@ -50,7 +48,8 @@ export default buildSchema(`
        deleteCity(id: ID!): SuccessResponse
        updateTheme(id: ID!, description: String): SuccessResponse
        addCity(id: ID!, city: String!, country: String!, language: String!): Destination 
-       signup(displayName: String!, email: String!, password: String!, username: String!): User
+       signup(user: UserInput!): User
+#       signup(displayName: String!, email: String!, password: String!, username: String!): User
    }
    
 `);

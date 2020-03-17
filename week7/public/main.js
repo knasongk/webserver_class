@@ -243,36 +243,33 @@ const signupUser = async e => {
 	console.log("user.username = ", user.username);
 	console.log("user.password = ", user.password);
 
-	const query = `mutation {
-	   signup(displayName: "${user.displayName}", email: "${user.email}", password: "${user.password}", username: "${user.username}") {
-	      displayName
-	      username
-	   }
-	 }`;
-
-	/*
 	const query = `mutation ($user: UserInput!) {
-	   signup(user: "${user.displayName}, ${user.email}, ${user.username}, ${user.password}") {
+	   signup(user: $user) {
 	      displayName
 	      username
 	   }
 	 }`;
-	 */
 
-
-
-	 console.log("query = ", query);
+	 variables = {user};
 
 	 const signedUpUser = await makeRequest('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify({query})
+		body: JSON.stringify({query, variables})
 	 });
 
-	 if (!signedUpUser)
+         const { data, errors } = signedUpUser;
+
+	 if(!data.signup)
+	 {
+	     alert('fail to signup user ' + user.username);
 		return;
-         
-	  console.log("signedUpUser.username = ", signedUpUser.username);
+         }
+
+	  console.log("data.signup.username = ", data.signup.username);
+	  console.log("data.signup.displayName = ", data.signup.displayName);
+
+	  alert('User ' + data.signup.username + ' has signed up for the travel service');
 };
 
 const cancelSignup = async e => {
