@@ -64,13 +64,21 @@ const resolvers = {
 		   return city; // city will be blank
            }
    },
-   signup: async(user, session) => {
+   signup: async(user, {session}) => {
 	   try {
 	   const { displayName, email, password, username } = user;
 	   console.log("displayName = ", displayName);
 	   console.log("email = ", email);
 	   console.log("password = ", password);
 	   console.log("username = ", username);
+
+           if(!session.user)
+		   console.log("session.user is null");
+           else {
+	     console.log("ksn1: session.user.displayName = ", session.user.displayName);
+	     console.log("ksn1: session.user.username = ", session.user.username);
+           }
+
 	   console.log("in signup new2");
 	   session.user = convertUserFromDatabase(await createUser(user));
 	   console.log("session.user.displayName = ", session.user.displayName);
