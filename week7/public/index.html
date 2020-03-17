@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html>
+
+<!-- Creating web pages showing vacation places that each of us have visited or would 
+    like to visit.
+      
+      I&C SCI_X 472.15
+    -->
+<head>
+    <title>Vacation  Spots</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="Ken Nasongkhla "  />
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="jquery-3.4.1.js"></script>
+    <script src="main.js"></script>
+</head>
+
+<body>
+
+<div style="text-align: center;">
+  <h1 id="top">Places to Visit</h1>
+	<div id="signupBox">
+		<a href="#signup-dialog" data-toggle="modal" data-target="#signup-dialog">Sign Up</a>
+	</div>
+	<div id="loginBox">
+		<a href="#login-dialog" data-toggle="modal" data-target="#login-dialog">Log In</a>
+	</div>
+	<div id="resetBox">
+		<a href="#reset-dialog" data-toggle="modal" data-target="#reset-dialog">Reset Password</a>
+	</div>
+</div>
+
+  <br>
+  <button id="tour1">Get tour #1 information</button>
+  <button id="tour2">Get tour #2 information</button>
+
+  <!--- Just examples of images.  You can add any pictures of your favorite places -->
+
+   <h3 id="thailand">Bangkok, Thailand</h3>
+  <img src="http://localhost:8080/thai_palace.jpg"
+       width="600" height="450"
+      title="Thai palace"\>
+  <br><br>
+
+  <h2 id="adding_new_city"> ADD NEW CITY</h2>
+  <form id="addForm">
+	 <p>
+	 <label>ID: <input name="id" placeholder="18"/></label>
+	 </p>
+	 <p>
+	 <label>City: <input name="city" placeholder="Bangkok"/></label>
+	 </p>
+	 <p>
+	 <label>Country: <input name="country" placeholder="Thailand"/></label>
+	 </p>
+	 <p>
+	 <label>Language: <input name="language" placeholder="Thai"/></label>
+	 </p>
+	 <input type="submit" />
+  </form>
+
+  <h2 id="retrieve_city"> RETRIEVE LIST OF CITIES FROM THE SELECTED COUNTRY</h2>
+  <form id="retrieveForm">
+	 <p>
+	 <label>Country: <input name="country" placeholder="Italy"/></label>
+	 </p>
+	 <input type="submit" />
+  </form>
+
+  <h2 id="update_theme"> UPDATE THEME DESCRIPTION</h2>
+  <form id="updateForm">
+	 <p>
+	 <label>ID: <input name="id" placeholder="3"/></label>
+	 </p>
+	 <p>
+	 <label>DESCRIPTION: <input name="description" placeholder="listen to live music"/></label>
+	 </p>
+	 <input type="submit" />
+  </form>
+
+  <h2 id="delete_city"> DELETE A CITY</h2>
+  <form id="deleteForm">
+	 <p>
+	 <label>ID: <input name="id" placeholder="7"/></label>
+	 </p>
+	 <input type="submit" />
+  </form>
+
+  <h2 id="signup-dialog"> SIGN UP</h2>
+  <form id="signupForm">
+          <p>
+            <label>Name: <input id="display_name"/></label>
+          </p>
+          <p>
+            <label>Email Address: <input id="email_address"/></label>
+          </p>
+          <p>
+            <label>Username: <input id="signup-username"/></label>
+          </p>
+          <p>
+            <label>Password: <input id="signup-password"/></label>
+          </p>
+	  
+	  <button id="cancelSignup">cancel</button>
+	  <input type="submit" name="signup" value="sign up"></input>
+  </form>
+
+  <h2 id="login-dialog"> LOG IN</h2>
+  <form id="loginForm">
+          <p>
+            <label>Username: <input id="login-username"/></label>
+          </p>
+          <p>
+            <label>Password: <input id="login-password"/></label>
+          </p>
+  </form>
+  <button type = "cancel" form = "loginForm" value="Cancel">Cancel</button>
+  <button type = "passwordReset" form = "loginForm" value="passwordReset">Request Password Rest</button>
+  <button type = "submit" form = "loginForm" value="Submit">Submit</button>
+
+  <h2 id="reset-dialog"> RESET PASSWORD</h2>
+  <form id="resetForm">
+          <p>
+            <label>Username: <input id="reset-username"/></label>
+          </p>
+          <p>
+            <label>Email Code: <input id="reset-key"/></label>
+          </p>
+          <p>
+            <label>Password: <input id="reset-password"/></label>
+          </p>
+
+  </form>
+
+  <button type = "cancel" form = "resetForm" value="Cancel">Cancel</button>
+  <button type = "submit" form = "resetForm" value="Submit">Submit</button>
+
+
+</body>
+
+</html>
