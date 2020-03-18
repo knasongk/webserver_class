@@ -31,6 +31,9 @@
 	<div id="resetBox">
 		<a href="#reset-dialog" data-toggle="modal" data-target="#reset-dialog">Reset Password</a>
 	</div>
+	<div id="logoutBox">
+		<a href="#logout-dialog" data-toggle="modal" data-target="#logout-dialog">Log Out</a>
+	</div>
 </div>
 
   <br>
@@ -116,10 +119,11 @@
           <p>
             <label>Password: <input id="login-password"/></label>
           </p>
+
+	  <button id="cancelLogin">cancel</button>
+	  <button id="passwordReset">Request Password Reset</button>
+	  <input type="submit" name="login" value="login"></input>
   </form>
-  <button type = "cancel" form = "loginForm" value="Cancel">Cancel</button>
-  <button type = "passwordReset" form = "loginForm" value="passwordReset">Request Password Rest</button>
-  <button type = "submit" form = "loginForm" value="Submit">Submit</button>
 
   <h2 id="reset-dialog"> RESET PASSWORD</h2>
   <form id="resetForm">
@@ -132,12 +136,14 @@
           <p>
             <label>Password: <input id="reset-password"/></label>
           </p>
-
+	  <button id="cancelReset">cancel</button>
+	  <input type="submit" name="reset" value="reset"></input>
   </form>
 
-  <button type = "cancel" form = "resetForm" value="Cancel">Cancel</button>
-  <button type = "submit" form = "resetForm" value="Submit">Submit</button>
-
+  <h2 id="logout-dialog"> LOG OUT</h2>
+  <form id="logoutForm">
+	  <input type="submit" name="logout" value="logout"></input>
+  </form>
 
 </body>
 

@@ -18,6 +18,10 @@ window.onload = function() {
     document.getElementById('deleteForm').addEventListener('submit', deleteCity);
     document.getElementById('signupForm').addEventListener('submit', signupUser);
     document.getElementById('cancelSignup').addEventListener('click', cancelSignup);
+    document.getElementById('loginForm').addEventListener('submit', loginUser);
+    document.getElementById('cancelLogin').addEventListener('click', cancelLogin);
+    document.getElementById('passwordReset').addEventListener('click', passwordReset);
+    document.getElementById('logoutForm').addEventListener('submit', logoutUser);
 }
 
 const parseField = (formId, fieldName) => {
@@ -275,6 +279,81 @@ const signupUser = async e => {
 const cancelSignup = async e => {
 	e.preventDefault();
 	console.log("in cancelSignup");
+}
+
+const loginUser = async e => {
+	e.preventDefault();
+
+	console.log("in loginUser");
+
+	const userCredential = {
+	  username: document.querySelector('#login-username').value,
+	  password: document.querySelector('#login-password').value,
+	};
+
+	console.log("userCredential.username = ", userCredential.username);
+	console.log("userCredential.password = ", userCredential.password);
+
+	const query = `mutation ($userCredential: LoginInput!) {
+	   login(loginInput: $userCredential) {
+	      displayName
+	      username
+	   }
+	 }`;
+
+	 variables = {userCredential};
+
+	 const loginUser = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query, variables})
+	 });
+
+         const { data, errors } = loginUser;
+
+	 if(!data.login)
+	 {
+	     alert('fail to login user ' + userCredential.username);
+		return;
+         }
+
+	  console.log("data.login.username = ", data.login.username);
+	  console.log("data.login.displayName = ", data.login.displayName);
+
+	  alert('User ' + data.login.username + ' has log into the travel service');
+};
+
+const cancelLogin = async e => {
+	e.preventDefault();
+	console.log("in cancelLogin");
+}
+
+const passwordReset = async e => {
+	e.preventDefault();
+	console.log("in passwordReset");
+}
+
+const logoutUser = async e => {
+	e.preventDefault();
+
+	console.log("in logoutUser");
+
+	const query = `mutation {
+	   logout { wasSuccessful }
+	 }`;
+
+	 const retStat = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query})
+	 });
+
+        const { data, errors } = retStat;
+
+	console.log("data.logout.wasSuccessful = ", data.logout.wasSuccessful);
+
+	if(!data.logout.wasSuccessful)
+		alert('Fail to logout');
 }
 
 function getTarget(e) {

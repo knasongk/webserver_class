@@ -3,7 +3,9 @@ import { addCity } from '../services/insert_city.js';
 import { getCityByCountry } from '../services/retrieve_city.js';
 import { updateTheme } from '../services/update_theme.js';
 import { deleteCity } from '../services/delete_city.js';
-import { createUser } from '../services/users.js';
+import { compareHashed } from '../auth';
+import { createUser,
+         getUserByUsername } from '../services/users.js';
 
 
 const convertUserFromDatabase = user => {
@@ -77,8 +79,8 @@ const resolvers = {
            if(!session.user)
 		   console.log("session.user is null");
            else {
-	     console.log("ksn1: session.user.displayName = ", session.user.displayName);
-	     console.log("ksn1: session.user.username = ", session.user.username);
+	     console.log("signup: session.user.displayName = ", session.user.displayName);
+	     console.log("signup: session.user.username = ", session.user.username);
            }
 
 	   console.log("in signup");
@@ -92,27 +94,43 @@ const resolvers = {
                 console.error(err); 
 	   }
    },
-
-	/*
-   signup: async(user, {session}) => {
+	login: async({loginInput: { username, password }}, {session}) => {
 	   try {
-	   const { displayName, email, password, username } = user;
-	   console.log("displayName = ", displayName);
-	   console.log("email = ", email);
-	   console.log("password = ", password);
 	   console.log("username = ", username);
+	   console.log("password = ", password);
 
            if(!session.user)
 		   console.log("session.user is null");
            else {
-	     console.log("ksn1: session.user.displayName = ", session.user.displayName);
-	     console.log("ksn1: session.user.username = ", session.user.username);
+	     console.log("login: session.user.displayName = ", session.user.displayName);
+	     console.log("login: session.user.username = ", session.user.username);
            }
 
-	   console.log("in signup new2");
-	   session.user = convertUserFromDatabase(await createUser(user));
-	   console.log("session.user.displayName = ", session.user.displayName);
-	   console.log("session.user.username = ", session.user.username);
+	   console.log("in login");
+
+           const user = await getUserByUsername(username);
+
+	   if(!user){
+               console.log("username " + username + " is not in the database");
+	       session.user = null;
+	       return session.user;
+           }
+
+           console.log("user.password = ", user.password);
+
+           const matches = await compareHashed(password, user.password);
+
+	   console.log("matches = ", matches);
+
+           session.user = matches ? convertUserFromDatabase(user) : null;
+
+	   if(!session.user) {
+              console.log("password " + password + " does not match for user " + username);
+           }
+           else {
+	     console.log("session.user.displayName = ", session.user.displayName);
+	     console.log("session.user.username = ", session.user.username);
+	   }
 	   return session.user;
            }
 	   catch(err)
@@ -120,8 +138,14 @@ const resolvers = {
                 console.error(err); 
 	   }
    },
-   */
-   
+   logout: async(args, { session }) => {
+	   console.log("in logout");
+	   delete session.user;
+	   if(!session.user) {
+		   console.log("session.user is now null");
+	   }
+	   return { wasSuccessful: true };
+   },
 
 };
 

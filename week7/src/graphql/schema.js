@@ -40,6 +40,11 @@ export default buildSchema(`
       username: String!
    }
 
+   input LoginInput {
+      username: String!
+      password: String!
+   }
+
    type Query {
       cityByCountry(country: String!): [Destination] 
    }
@@ -49,7 +54,8 @@ export default buildSchema(`
        updateTheme(id: ID!, description: String): SuccessResponse
        addCity(id: ID!, city: String!, country: String!, language: String!): Destination 
        signup(user: UserInput!): User
-#       signup(displayName: String!, email: String!, password: String!, username: String!): User
+       login(loginInput: LoginInput!): User
+       logout: SuccessResponse
    }
    
 `);
