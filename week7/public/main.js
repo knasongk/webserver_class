@@ -20,7 +20,7 @@ window.onload = function() {
     document.getElementById('cancelSignup').addEventListener('click', cancelSignup);
     document.getElementById('loginForm').addEventListener('submit', loginUser);
     document.getElementById('cancelLogin').addEventListener('click', cancelLogin);
-    document.getElementById('passwordReset').addEventListener('click', passwordReset);
+    document.getElementById('request_password_reset').addEventListener('click', requestPasswordReset);
     document.getElementById('logoutForm').addEventListener('submit', logoutUser);
 }
 
@@ -328,9 +328,32 @@ const cancelLogin = async e => {
 	console.log("in cancelLogin");
 }
 
-const passwordReset = async e => {
+const requestPasswordReset = async e => {
 	e.preventDefault();
-	console.log("in passwordReset");
+	console.log("in requestPasswordReset");
+
+
+	const username = document.querySelector('#login-username').value;
+	const query = `mutation ($username: String!) {
+	   requestPasswordReset(username: $username) {
+	      wasSuccessful
+	   }
+	 }`;
+
+	 variables = {username};
+
+	 const retStat = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query, variables})
+	 });
+
+	const { data, errors } = retStat;
+
+	if(!data.requestPasswordReset.wasSuccessful) 
+	     alert('Fail to send a reset email to ' + username);
+	else
+             alert('A reset email with a code has been sent to your email address');
 }
 
 const logoutUser = async e => {

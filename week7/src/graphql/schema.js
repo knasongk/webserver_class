@@ -56,6 +56,7 @@ export default buildSchema(`
        signup(user: UserInput!): User
        login(loginInput: LoginInput!): User
        logout: SuccessResponse
+       requestPasswordReset(username: String!): SuccessResponse
    }
    
 `);

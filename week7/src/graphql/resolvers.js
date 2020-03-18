@@ -4,8 +4,10 @@ import { getCityByCountry } from '../services/retrieve_city.js';
 import { updateTheme } from '../services/update_theme.js';
 import { deleteCity } from '../services/delete_city.js';
 import { compareHashed } from '../auth';
+import { sendResetEmail } from '../email';
 import { createUser,
-         getUserByUsername } from '../services/users.js';
+         getUserByUsername,
+         savePasswordResetKey } from '../services/users.js';
 
 
 const convertUserFromDatabase = user => {
@@ -94,7 +96,7 @@ const resolvers = {
                 console.error(err); 
 	   }
    },
-	login: async({loginInput: { username, password }}, {session}) => {
+   login: async({loginInput: { username, password }}, {session}) => {
 	   try {
 	   console.log("username = ", username);
 	   console.log("password = ", password);
@@ -145,6 +147,16 @@ const resolvers = {
 		   console.log("session.user is now null");
 	   }
 	   return { wasSuccessful: true };
+   },
+   requestPasswordReset: async({ username }) => {
+          try {
+             const key = await sendResetEmail(await getUserByUsername(username));
+             await savePasswordResetKey(username, key);
+          } catch (err) {
+             console.log(err);
+             return { wasSuccessful: false };
+          }
+          return { wasSuccessful: true };
    },
 
 };
