@@ -28,7 +28,7 @@ export const sendResetEmail = async({ display_name, email, id }) => {
 		text: generatePasswordResetMessage(display_name, key)
 	});
 
-	console.log("sendResetEmail key = ", key);
+	//console.log("sendResetEmail key = ", key);
 
 	return key;
 };

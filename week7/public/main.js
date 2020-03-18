@@ -20,12 +20,11 @@ window.onload = function() {
     document.getElementById('loginForm').addEventListener('submit', loginUser);
     document.getElementById('cancelLogin').addEventListener('click', cancelLogin);
     document.getElementById('request_password_reset').addEventListener('click', requestPasswordReset);
-    document.getElementById('resetForm').addEventListener('submit', resetPassword);
-
+    document.getElementById('resetPasswordForm').addEventListener('submit', resetPassword);
     document.getElementById('cancelReset').addEventListener('click', cancelReset);
     document.getElementById('logoutForm').addEventListener('submit', logoutUser);
 
-    console.log("in window.onload");
+    //console.log("in window.onload");
     getCurrentUser();
 };
 
@@ -42,18 +41,18 @@ const getCurrentUser = async e => {
 
     if(data.currentUser !== null)
     {
-	console.log("before calling setCurrentUser()");
+	//console.log("before calling setCurrentUser()");
         setCurrentUser(data.currentUser); 
     }
 }
 
 const parseField = (formId, fieldName) => {
-	console.log("formId  = ", formId);
-	console.log("fieldName = ", fieldName);
+	//console.log("formId  = ", formId);
+	//console.log("fieldName = ", fieldName);
 
       const inputSelector = `#${formId} [name="${fieldName}"]`;
 
-      console.log("inputSelector = ", inputSelector);
+      //console.log("inputSelector = ", inputSelector);
 
       const input = document.querySelector(inputSelector);
       return input.value || input.placeholder;
@@ -149,7 +148,7 @@ const addCity = async e => {
 
         const { data, errors } = retCity;
 
-	console.log("retCity is ", data.addCity.city);
+	//console.log("retCity is ", data.addCity.city);
 
 	if(data.addCity.city === '')
 		alert('Fail to add city ' + dest.city);
@@ -168,10 +167,10 @@ const retrieveCity = async e => {
 
 	try {
 	  const dest = parseRetrieveForm('retrieveForm');
-	  console.log("dest.country = ", dest.country);
+	  //console.log("dest.country = ", dest.country);
 
 	  const query = `query { cityByCountry(country: "${dest.country}") ${citySelection} }`;
-	  console.log("query = ", query);
+	  //console.log("query = ", query);
 
 	 // var body_Jason = JSON.stringify({query});
 	  //console.log("body_Jason = ", body_Jason);
@@ -190,10 +189,10 @@ const retrieveCity = async e => {
     	  {
 		for(i=0; i<data.cityByCountry.length; i++)
 		{
-                  console.log("city = ", data.cityByCountry[i].city);
+                  //console.log("city = ", data.cityByCountry[i].city);
 		  cityStr += (data.cityByCountry[i].city + ', ');
 		}
-		console.log("cityStr = ", cityStr);
+		//console.log("cityStr = ", cityStr);
 
 		// display list of cities in a popup box
 		alert(cityStr);
@@ -212,8 +211,8 @@ const updateTheme = async e => {
 	e.preventDefault();
 
 	const theme = parseUpdateForm('updateForm');
-	console.log("theme.id = ", theme.id);
-	console.log("theme.description = ", theme.description);
+	//console.log("theme.id = ", theme.id);
+	//console.log("theme.description = ", theme.description);
 
 	const query = `mutation { updateTheme(id: "${theme.id}", description: "${theme.description}") { wasSuccessful }}`;
 
@@ -225,7 +224,7 @@ const updateTheme = async e => {
 
         const { data, errors } = retStat;
 
-	console.log("data.updateTheme.wasSuccessful = ", data.updateTheme.wasSuccessful);
+	//console.log("data.updateTheme.wasSuccessful = ", data.updateTheme.wasSuccessful);
 
 	if(data.updateTheme.wasSuccessful)
 		alert('Succeed in update theme id' + theme.id);
@@ -237,7 +236,7 @@ const deleteCity = async e => {
 	e.preventDefault();
 
 	const dest = parseDeleteForm('deleteForm');
-	console.log("dest.id = ", dest.id);
+	//console.log("dest.id = ", dest.id);
 
 	const query = `mutation { deleteCity(id: "${dest.id}") { wasSuccessful }}`;
 
@@ -249,7 +248,7 @@ const deleteCity = async e => {
 
         const { data, errors } = retStat;
 
-	console.log("data.deleteCity.wasSuccessful = ", data.deleteCity.wasSuccessful);
+	//console.log("data.deleteCity.wasSuccessful = ", data.deleteCity.wasSuccessful);
 
 	if(data.deleteCity.wasSuccessful)
 		alert('Succeed to delete city id' + dest.id);
@@ -261,7 +260,7 @@ const deleteCity = async e => {
 const signupUser = async e => {
 	e.preventDefault();
 
-	console.log("in signupUser");
+	//console.log("in signupUser");
 
 	const user = {
 	  displayName: document.querySelector('#display_name').value,
@@ -270,10 +269,10 @@ const signupUser = async e => {
 	  password: document.querySelector('#signup-password').value,
 	};
 
-	console.log("user.displayName = ", user.displayName);
-	console.log("user.email = ", user.email);
-	console.log("user.username = ", user.username);
-	console.log("user.password = ", user.password);
+	//console.log("user.displayName = ", user.displayName);
+	//console.log("user.email = ", user.email);
+	//console.log("user.username = ", user.username);
+	//console.log("user.password = ", user.password);
 
 	const query = `mutation ($user: UserInput!) {
 	   signup(user: $user) {
@@ -298,8 +297,8 @@ const signupUser = async e => {
 		return;
          }
 
-	  console.log("data.signup.username = ", data.signup.username);
-	  console.log("data.signup.displayName = ", data.signup.displayName);
+	  //console.log("data.signup.username = ", data.signup.username);
+	  //console.log("data.signup.displayName = ", data.signup.displayName);
 
 	  setCurrentUser(data.signup);
 	  alert('User ' + data.signup.username + ' has signed up for the travel service');
@@ -307,21 +306,21 @@ const signupUser = async e => {
 
 const cancelSignup = async e => {
 	e.preventDefault();
-	console.log("in cancelSignup");
+	document.querySelector('#signupForm').reset();
 }
 
 const loginUser = async e => {
 	e.preventDefault();
 
-	console.log("in loginUser");
+	//console.log("in loginUser");
 
 	const userCredential = {
 	  username: document.querySelector('#login-username').value,
 	  password: document.querySelector('#login-password').value,
 	};
 
-	console.log("userCredential.username = ", userCredential.username);
-	console.log("userCredential.password = ", userCredential.password);
+	//console.log("userCredential.username = ", userCredential.username);
+	//console.log("userCredential.password = ", userCredential.password);
 
 	const query = `mutation ($userCredential: LoginInput!) {
 	   login(loginInput: $userCredential) {
@@ -346,8 +345,8 @@ const loginUser = async e => {
 		return;
          }
 
-	  console.log("data.login.username = ", data.login.username);
-	  console.log("data.login.displayName = ", data.login.displayName);
+	  //console.log("data.login.username = ", data.login.username);
+	  //console.log("data.login.displayName = ", data.login.displayName);
 
 	  setCurrentUser(data.login);
 	  alert('User ' + data.login.username + ' has log into the travel service');
@@ -355,12 +354,17 @@ const loginUser = async e => {
 
 const cancelLogin = async e => {
 	e.preventDefault();
-	console.log("in cancelLogin");
+	document.querySelector('#loginForm').reset();
+}
+
+const cancelReset = async e => {
+	e.preventDefault();
+	//document.querySelector('#resetPasswordForm').reset();
 }
 
 const requestPasswordReset = async e => {
 	e.preventDefault();
-	console.log("in requestPasswordReset");
+	//console.log("in requestPasswordReset");
 
 
 	const username = document.querySelector('#login-username').value;
@@ -388,7 +392,7 @@ const requestPasswordReset = async e => {
 
 const resetPassword = async e => {
         e.preventDefault();
-	console.log("in resetPassword");
+	//console.log("in resetPassword");
 
         const resetInput = {
            username: document.querySelector('#reset-username').value,
@@ -413,11 +417,6 @@ const resetPassword = async e => {
 
          const { data, errors } = user;
 
-	/*
-	 if(!errors.resetPassword)
-             console.log("errors message is ", errors.resetPassword.message);
-	     */
-
 	 /* check for errors */
 	 if(errors) {
 	   const err = errors.find(({path}) => path.includes('resetPassword'));
@@ -427,8 +426,8 @@ const resetPassword = async e => {
             }
           }
 
-	  console.log("data.resetPassword.username = ", data.resetPassword.username);
-	  console.log("data.resetPassword.displayName = ", data.resetPassword.displayName);
+	  //console.log("data.resetPassword.username = ", data.resetPassword.username);
+	  //console.log("data.resetPassword.displayName = ", data.resetPassword.displayName);
 
 	  setCurrentUser(data.resetPassword);
 	  alert('Successfully reset the password for User ' + data.resetPassword.username);
@@ -437,7 +436,7 @@ const resetPassword = async e => {
 const logoutUser = async e => {
 	e.preventDefault();
 
-	console.log("in logoutUser");
+	//console.log("in logoutUser");
 
 	const query = `mutation {
 	   logout { wasSuccessful }
@@ -451,7 +450,7 @@ const logoutUser = async e => {
 
         const { data, errors } = retStat;
 
-	console.log("data.logout.wasSuccessful = ", data.logout.wasSuccessful);
+	//console.log("data.logout.wasSuccessful = ", data.logout.wasSuccessful);
 
 	if(!data.logout.wasSuccessful)
 		alert('Fail to logout');
@@ -461,18 +460,6 @@ const logoutUser = async e => {
 		setCurrentUser(null);
 	}
 }
-
-const cancelReset = async e => {
-	e.preventDefault();
-
-	console.log("in cancelReset");
-};
-
-const cancelSignupUser = async e => {
-	e.preventDefault();
-
-	console.log("in cancelSignupUser");
-};
 
 
 //when the button1 is click call showTour1() to fetch the tour1 from the server 

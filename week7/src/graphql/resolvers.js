@@ -14,12 +14,12 @@ import { createUser,
 
 
 const convertUserFromDatabase = user => {
-	console.log("in convertUserFromDatabase");
+	//console.log("in convertUserFromDatabase");
 	user.displayName = user.display_name;
 	delete user.display_name;
 
-	console.log("user.displayName = ", user.displayName);
-	console.log("user.username = ", user.username);
+	//console.log("user.displayName = ", user.displayName);
+	//console.log("user.username = ", user.username);
 	return user;
 }
 
@@ -81,17 +81,19 @@ const resolvers = {
 	   console.log("username = ", username);
 	   */
 
+		   /*
            if(!session.user)
 		   console.log("session.user is null");
            else {
 	     console.log("signup: session.user.displayName = ", session.user.displayName);
 	     console.log("signup: session.user.username = ", session.user.username);
            }
+	   */
 
-	   console.log("in signup");
+	   //console.log("in signup");
 	   session.user = convertUserFromDatabase(await createUser(user));
-	   console.log("session.user.displayName = ", session.user.displayName);
-	   console.log("session.user.username = ", session.user.username);
+	   //console.log("session.user.displayName = ", session.user.displayName);
+	   //console.log("session.user.username = ", session.user.username);
 	   return session.user;
            }
 	   catch(err)
@@ -101,34 +103,37 @@ const resolvers = {
    },
    login: async({loginInput: { username, password }}, {session}) => {
 	   try {
-	   console.log("username = ", username);
-	   console.log("password = ", password);
+	   //console.log("username = ", username);
+	   //console.log("password = ", password);
 
+		   /*
            if(!session.user)
 		   console.log("session.user is null");
            else {
 	     console.log("login: session.user.displayName = ", session.user.displayName);
 	     console.log("login: session.user.username = ", session.user.username);
            }
+	   */
 
-	   console.log("in login");
+	   //console.log("in login");
 
            const user = await getUserByUsername(username);
 
 	   if(!user){
-               console.log("username " + username + " is not in the database");
+               //console.log("username " + username + " is not in the database");
 	       session.user = null;
 	       return session.user;
            }
 
-           console.log("user.password = ", user.password);
+           //console.log("user.password = ", user.password);
 
            const matches = await compareHashed(password, user.password);
 
-	   console.log("matches = ", matches);
+	   //console.log("matches = ", matches);
 
            session.user = matches ? convertUserFromDatabase(user) : null;
 
+		   /*
 	   if(!session.user) {
               console.log("password " + password + " does not match for user " + username);
            }
@@ -136,6 +141,8 @@ const resolvers = {
 	     console.log("session.user.displayName = ", session.user.displayName);
 	     console.log("session.user.username = ", session.user.username);
 	   }
+	   */
+
 	   return session.user;
            }
 	   catch(err)
@@ -144,11 +151,13 @@ const resolvers = {
 	   }
    },
    logout: async(args, { session }) => {
-	   console.log("in logout");
+	   //console.log("in logout");
 	   delete session.user;
+	   /*
 	   if(!session.user) {
 		   console.log("session.user is now null");
 	   }
+	   */
 	   return { wasSuccessful: true };
    },
    requestPasswordReset: async({ username }) => {
@@ -165,8 +174,8 @@ const resolvers = {
           const user = await getUserByUsername(username);
 	  const storedKey = await getPasswordResetKey(user);
 
-	  console.log("key = ", key);
-	  console.log("storedKey = ", storedKey);
+	  //console.log("key = ", key);
+	  //console.log("storedKey = ", storedKey);
 	   
 	  if(key !== storedKey) throw new Error('Invalid password reset key');
 
