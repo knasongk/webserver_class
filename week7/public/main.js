@@ -21,6 +21,9 @@ window.onload = function() {
     document.getElementById('loginForm').addEventListener('submit', loginUser);
     document.getElementById('cancelLogin').addEventListener('click', cancelLogin);
     document.getElementById('request_password_reset').addEventListener('click', requestPasswordReset);
+    document.getElementById('resetForm').addEventListener('submit', resetPassword);
+
+    document.getElementById('cancelReset').addEventListener('click', cancelReset);
     document.getElementById('logoutForm').addEventListener('submit', logoutUser);
 }
 
@@ -356,6 +359,45 @@ const requestPasswordReset = async e => {
              alert('A reset email with a code has been sent to your email address');
 }
 
+const resetPassword = async e => {
+        e.preventDefault();
+	console.log("in resetPassword");
+
+        const resetInput = {
+           username: document.querySelector('#reset-username').value,
+           password: document.querySelector('#reset-password').value,
+           key: document.querySelector('#reset-key').value
+        };
+
+        const query = `mutation ($resetInput: PasswordResetInput!) {
+                       resetPassword(resetInput: $resetInput) {
+                         displayName
+                         username
+                       }
+                      }`;
+
+	 variables = {resetInput};
+
+	 const user = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query, variables})
+	 });
+
+         const { data, errors } = user;
+
+	 if(!data.resetPassword)
+	 {
+	     alert('fail to reset password for user ' + resetInput.username);
+		return;
+         }
+
+	  console.log("data.resetPassword.username = ", data.resetPassword.username);
+	  console.log("data.resetPassword.displayName = ", data.resetPassword.displayName);
+
+	  alert('Successfully reset the password for User ' + data.resetPassword.username);
+}
+
 const logoutUser = async e => {
 	e.preventDefault();
 
@@ -379,13 +421,11 @@ const logoutUser = async e => {
 		alert('Fail to logout');
 }
 
-function getTarget(e) {
-	if(!e) {
-	e = window.event;
-	} 
+const cancelReset = async e => {
+	e.preventDefault();
 
-	return e.target || e.srcElement;
-}
+	console.log("in cancelReset");
+};
 
 const cancelSignupUser = async e => {
 	e.preventDefault();

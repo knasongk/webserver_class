@@ -45,6 +45,12 @@ export default buildSchema(`
       password: String!
    }
 
+   input PasswordResetInput {
+      username: String!
+      password: String!
+      key: String!
+   }
+
    type Query {
       cityByCountry(country: String!): [Destination] 
    }
@@ -57,6 +63,7 @@ export default buildSchema(`
        login(loginInput: LoginInput!): User
        logout: SuccessResponse
        requestPasswordReset(username: String!): SuccessResponse
+       resetPassword(resetInput: PasswordResetInput!): User
    }
    
 `);

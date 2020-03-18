@@ -133,7 +133,9 @@ body{background-color: cyan}
   font-size: 2em
 }
 
-
+#logoutBox {
+  font-size: 2em
+}
 
 /*------------------ media queries --------------------*/
 

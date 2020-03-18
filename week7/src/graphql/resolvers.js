@@ -7,6 +7,9 @@ import { compareHashed } from '../auth';
 import { sendResetEmail } from '../email';
 import { createUser,
          getUserByUsername,
+         getPasswordResetKey,
+         changePassword,
+         deleteResets,
          savePasswordResetKey } from '../services/users.js';
 
 
@@ -157,6 +160,20 @@ const resolvers = {
              return { wasSuccessful: false };
           }
           return { wasSuccessful: true };
+   },
+   resetPassword: async({ resetInput: {username, password, key } }, { session }) => {
+          const user = await getUserByUsername(username);
+	  const storedKey = await getPasswordResetKey(user);
+
+	  console.log("key = ", key);
+	  console.log("storedKey = ", storedKey);
+	   
+	  if(key !== storedKey) throw new Error('Invalid password reset key');
+
+	  await changePassword(user.id, password);
+	  await deleteResets(user);
+	  session.user = convertUserFromDatabase(user);
+	  return session.user;
    },
 
 };
