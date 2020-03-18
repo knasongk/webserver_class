@@ -53,6 +53,7 @@ export default buildSchema(`
 
    type Query {
       cityByCountry(country: String!): [Destination] 
+      currentUser: User
    }
 
    type Mutation {

@@ -2,7 +2,6 @@ const citySelection = `{
   city
 }`;
 
-
 window.onload = function() {
     var button1 = document.querySelector("#tour1");
     // add event listener to the id tour1 click
@@ -25,6 +24,27 @@ window.onload = function() {
 
     document.getElementById('cancelReset').addEventListener('click', cancelReset);
     document.getElementById('logoutForm').addEventListener('submit', logoutUser);
+
+    console.log("in window.onload");
+    getCurrentUser();
+};
+
+const getCurrentUser = async e => {
+    const query = `query { currentUser { displayName username} }`;
+
+    const user = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query})
+	 });
+
+    const { data, errors } = user;
+
+    if(data.currentUser !== null)
+    {
+	console.log("before calling setCurrentUser()");
+        setCurrentUser(data.currentUser); 
+    }
 }
 
 const parseField = (formId, fieldName) => {
@@ -102,6 +122,11 @@ const makeRequest = async (url, params) => {
 	  console.error(err);
 	  alert('an error has occurred in makeRequest');
 	};
+};
+
+const setCurrentUser = currentUser => {
+	document.querySelector('#welcome-message').innerText = 
+		currentUser ? `Welcome ${currentUser.username}!` : '';
 };
 
 const addCity = async e => {
@@ -276,6 +301,7 @@ const signupUser = async e => {
 	  console.log("data.signup.username = ", data.signup.username);
 	  console.log("data.signup.displayName = ", data.signup.displayName);
 
+	  setCurrentUser(data.signup);
 	  alert('User ' + data.signup.username + ' has signed up for the travel service');
 };
 
@@ -323,6 +349,7 @@ const loginUser = async e => {
 	  console.log("data.login.username = ", data.login.username);
 	  console.log("data.login.displayName = ", data.login.displayName);
 
+	  setCurrentUser(data.login);
 	  alert('User ' + data.login.username + ' has log into the travel service');
 };
 
@@ -386,15 +413,24 @@ const resetPassword = async e => {
 
          const { data, errors } = user;
 
-	 if(!data.resetPassword)
-	 {
-	     alert('fail to reset password for user ' + resetInput.username);
+	/*
+	 if(!errors.resetPassword)
+             console.log("errors message is ", errors.resetPassword.message);
+	     */
+
+	 /* check for errors */
+	 if(errors) {
+	   const err = errors.find(({path}) => path.includes('resetPassword'));
+	   if (err && !data.resetPassword){
+             alert("fail to reset password for user " + resetInput.username + " reason: " +  err.message);
 		return;
-         }
+            }
+          }
 
 	  console.log("data.resetPassword.username = ", data.resetPassword.username);
 	  console.log("data.resetPassword.displayName = ", data.resetPassword.displayName);
 
+	  setCurrentUser(data.resetPassword);
 	  alert('Successfully reset the password for User ' + data.resetPassword.username);
 }
 
@@ -419,6 +455,11 @@ const logoutUser = async e => {
 
 	if(!data.logout.wasSuccessful)
 		alert('Fail to logout');
+	else
+	{
+		alert('User is now logout');
+		setCurrentUser(null);
+	}
 }
 
 const cancelReset = async e => {

@@ -117,6 +117,10 @@ body{background-color: cyan}
 .box1 {border: 1px solid orange; display: flex; flex-direction: row; justify-content: space-between; font-weight:bold}
 .item_flex1 {background-color: lightGreen; border: 1px solid black; padding: 5px}
 
+#welcome-message {
+  font-size: 4em
+}
+
 #responsive_1 {
   font-size: 1em
 }

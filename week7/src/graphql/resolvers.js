@@ -175,6 +175,7 @@ const resolvers = {
 	  session.user = convertUserFromDatabase(user);
 	  return session.user;
    },
+   currentUser: (args, { session }) => session.user,
 
 };
 
