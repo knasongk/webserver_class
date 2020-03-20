@@ -1,5 +1,8 @@
 import knex from 'knex'
-import { development } from '../knexfile.js'
+import config from '../knexfile.js'
+import pg from 'pg'
 
-
-export default knex(development);
+pg.types.setTypeParser(20, 'text', parseInt);
+export default knex(
+	config[process.env.NODE_ENV ||'development']
+);

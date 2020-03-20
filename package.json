@@ -4,14 +4,15 @@
   "description": "uci web server class",
   "main": "index.js",
   "scripts": {
+    "build": "npm run migrate; npm run seed",
     "migrate": "knex --esm migrate:latest",
     "rollback": "knex --esm migrate:rollback",
-    "drop_db": "dropdb -U ken travel",
-    "create_db": "createdb -U ken travel",
+    "drop_db": "dropdb travel",
+    "create_db": "createdb travel",
     "seed1": "knex --esm seed:run --specific=seed_tables.js",
     "seed2": "knex --esm seed:run --specific=seed_tables_preferences.js",
     "seed": "knex --esm seed:run",
-    "reset-db": "npm run drop_db && npm run create_db && npm run migrate && npm run seed",
+    "reset-db": "npm run drop_db; npm run create_db; npm run migrate -- --env=development; npm run seed",
     "start": "node -r esm src/index.js",
     "test": "mocha --exit -r esm test/tests.js"
   },
