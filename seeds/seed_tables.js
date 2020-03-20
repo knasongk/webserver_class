@@ -1,3 +1,4 @@
+import { hashPassword } from '../src/auth'
 
 exports.seed = async knex => {
 	await knex('destinations').del();
@@ -112,19 +113,19 @@ exports.seed = async knex => {
              display_name: 'knasongk',
 	     username: 'Ken Nasongkhla',
 	     email: 'knasongk@yahoo.com',
-	     destination_id: 2
+	     password: await hashPassword('please12')
 	  },
 	  {
              display_name: 'madnat',
 	     username: 'Natalie Nasongkhla',
-	     email: 'matnat@yahoo.com',
-	     destination_id: 2
+	     email: 'madnat@yahoo.com',
+	     password: await hashPassword('madnatJ')
 	  },
 	  {
              display_name: 'tnt',
 	     username: 'Tam Nguyen',
-	     email: 'tnt@gmail.com',
-	     destination_id: 1 
+	     email: 'tntam@yahoo.com',
+	     password: await hashPassword('tntTam')
 	  }
 	]);
 };

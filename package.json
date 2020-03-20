@@ -4,13 +4,14 @@
   "description": "uci web server class",
   "main": "index.js",
   "scripts": {
-    "migrate": "knex migrate:latest",
-    "rollback": "knex migrate:rollback",
+    "migrate": "knex --esm migrate:latest",
+    "rollback": "knex --esm migrate:rollback",
     "drop_db": "dropdb -U ken travel",
     "create_db": "createdb -U ken travel",
-    "seed1": "knex seed:run --specific=seed_tables.js",
-    "seed2": "knex seed:run --specific=preferences.js",
-    "reset-db": "npm run drop_db; npm run create_db; npm run migrate; npm run seed1; npm run seed2",
+    "seed1": "knex --esm seed:run --specific=seed_tables.js",
+    "seed2": "knex --esm seed:run --specific=seed_tables_preferences.js",
+    "seed": "knex --esm seed:run",
+    "reset-db": "npm run drop_db && npm run create_db && npm run migrate && npm run seed",
     "start": "node -r esm src/index.js",
     "test": "mocha --exit -r esm test/tests.js"
   },
@@ -25,16 +26,25 @@
   },
   "homepage": "https://github.com/knasongk/webserver_class#readme",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
+    "connect-session-knex": "^1.6.0",
     "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "knex": "^0.20.10",
+    "express-graphql": "^0.9.0",
+    "express-session": "^1.17.0",
+    "graphql": "^14.6.0",
+    "knex": "^0.20.11",
     "lint": "^0.7.0",
-    "mocha": "^7.0.1",
+    "lokka": "^1.7.0",
+    "lokka-transport-http": "^1.6.1",
+    "minimalist": "^1.0.0",
+    "mocha": "^7.1.0",
     "morgan": "^1.9.1",
     "node-fetch": "^2.6.0",
-    "pg": "^7.18.1"
+    "nodemailer": "^6.4.5",
+    "pg": "^7.18.2"
   }
 }

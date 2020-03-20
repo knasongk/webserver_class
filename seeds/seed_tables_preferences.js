@@ -81,4 +81,32 @@ exports.seed = async knex => {
 	{ preference_id: 16, city_id: 16},
 	{ preference_id: 8, city_id: 11}
      ]);
+
+    await knex('themes').truncate();
+    await knex('themes').insert([
+        { 
+	   id: 1,
+	   activity: 'big bus tour',
+	   description: 'get on and off big city bus',
+	   preference_id: 8
+	},
+        { 
+	   id: 2,
+	   activity: 'galaria shopping',
+	   description: 'go shopping to all malls',
+	   preference_id: 4 
+	},
+        { 
+	   id: 3,
+	   activity: 'night clubs',
+	   description: 'go dancing and drinking',
+	   preference_id: 8
+	},
+        { 
+	   id: 4,
+	   activity: 'soccer match',
+	   description: 'go to local club team match',
+	   preference_id: 6 
+	}
+      ]);
 };

@@ -1,3 +1,7 @@
+const citySelection = `{
+  city
+}`;
+
 window.onload = function() {
     var button1 = document.querySelector("#tour1");
     // add event listener to the id tour1 click
@@ -11,15 +15,44 @@ window.onload = function() {
     document.getElementById('retrieveForm').addEventListener('submit', retrieveCity);
     document.getElementById('updateForm').addEventListener('submit', updateTheme);
     document.getElementById('deleteForm').addEventListener('submit', deleteCity);
+    document.getElementById('signupForm').addEventListener('submit', signupUser);
+    document.getElementById('cancelSignup').addEventListener('click', cancelSignup);
+    document.getElementById('loginForm').addEventListener('submit', loginUser);
+    document.getElementById('cancelLogin').addEventListener('click', cancelLogin);
+    document.getElementById('request_password_reset').addEventListener('click', requestPasswordReset);
+    document.getElementById('resetPasswordForm').addEventListener('submit', resetPassword);
+    document.getElementById('cancelReset').addEventListener('click', cancelReset);
+    document.getElementById('logoutForm').addEventListener('submit', logoutUser);
+
+    //console.log("in window.onload");
+    getCurrentUser();
+};
+
+const getCurrentUser = async e => {
+    const query = `query { currentUser { displayName username} }`;
+
+    const user = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query})
+	 });
+
+    const { data, errors } = user;
+
+    if(data.currentUser !== null)
+    {
+	//console.log("before calling setCurrentUser()");
+        setCurrentUser(data.currentUser); 
+    }
 }
 
 const parseField = (formId, fieldName) => {
-	console.log("formId  = ", formId);
-	console.log("fieldName = ", fieldName);
+	//console.log("formId  = ", formId);
+	//console.log("fieldName = ", fieldName);
 
       const inputSelector = `#${formId} [name="${fieldName}"]`;
 
-      console.log("inputSelector = ", inputSelector);
+      //console.log("inputSelector = ", inputSelector);
 
       const input = document.querySelector(inputSelector);
       return input.value || input.placeholder;
@@ -74,38 +107,25 @@ const parseDeleteForm = formId => {
 ////////////////////////////////////////////////////////////////////
 
 const makeRequest = async (url, params) => {
-        try {
-	  const response = await fetch(url, params);
-
-        if(!response.ok) throw new Error(response.statusText);
-
-	   const responseJson = await response.json();
-
-
-   	if(!responseJson.success) throw new Error(responseJson.message);
-	   return true;
-	}  
-	catch(err) {
-		console.error(err);
-		alert('an error has occurred');
-	};
-
-	return false;
-};
-
-const makeRequest_2 = async (url, params) => {
 	try {
+
 	  const response = await fetch(url, params);
 
 	  if(!response.ok) throw new Error(response.statusText);
 
 	  const responseJson = await response.json();
-	
+
 	  return responseJson;
 	}  
 	catch(err) {
 	  console.error(err);
+	  alert('an error has occurred in makeRequest');
 	};
+};
+
+const setCurrentUser = currentUser => {
+	document.querySelector('#welcome-message').innerText = 
+		currentUser ? `Welcome ${currentUser.username}!` : '';
 };
 
 const addCity = async e => {
@@ -118,21 +138,23 @@ const addCity = async e => {
 	//console.log("dest.country = ", dest.country);
 	//console.log("dest.language = ", dest.language);
 
-	var body_Jason = JSON.stringify(dest);
-	//console.log("body_Jason = ", body_Jason);
-	
-	const retCity = await makeRequest_2('/api/addCity', {
+	const query = `mutation { addCity(id: "${dest.id}", city: "${dest.city}", country: "${dest.country}", language: "${dest.language}") ${ citySelection }}`;
+
+	const retCity = await makeRequest('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify(dest)
+		body: JSON.stringify({query})
 	});
 
-	//console.log("retCity is ", retCity.dest_city);
+        const { data, errors } = retCity;
 
-	if(retCity.dest_city === '')
+	//console.log("retCity is ", data.addCity.city);
+
+	if(data.addCity.city === '')
 		alert('Fail to add city ' + dest.city);
 	else
-		alert('The city ' + retCity.dest_city + ' was added successfully');
+		alert('The city ' + data.addCity.city + ' was added successfully');
+
 	}
 	catch(err) {
 		console.error(err);
@@ -144,34 +166,41 @@ const retrieveCity = async e => {
 	e.preventDefault();
 
 	try {
-	const dest = parseRetrieveForm('retrieveForm');
-//	console.log("dest.country = ", dest.country);
+	  const dest = parseRetrieveForm('retrieveForm');
+	  //console.log("dest.country = ", dest.country);
 
-	var body_Jason = JSON.stringify(dest);
-//	console.log("body_Jason = ", body_Jason);
-	
-	const retCityList = await makeRequest_2('/api/retrieveCity', {
+	  const query = `query { cityByCountry(country: "${dest.country}") ${citySelection} }`;
+	  //console.log("query = ", query);
+
+	 // var body_Jason = JSON.stringify({query});
+	  //console.log("body_Jason = ", body_Jason);
+		
+          const retCityList = await makeRequest('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify(dest)
-	});
+		body: JSON.stringify({query}) 
+	  });
 
-	var cityStr = '';
+          const { data, errors } = retCityList;
 
-	if(retCityList.length > 0)
-	{
-		for(i=0; i<retCityList.length; i++)
+	  var cityStr = '';
+
+	  if(data.cityByCountry.length > 0)
+    	  {
+		for(i=0; i<data.cityByCountry.length; i++)
 		{
-                  console.log("city = ", retCityList[i].city);
-		  cityStr += (retCityList[i].city + ', ');
+                  //console.log("city = ", data.cityByCountry[i].city);
+		  cityStr += (data.cityByCountry[i].city + ', ');
 		}
-		console.log("cityStr = ", cityStr);
+		//console.log("cityStr = ", cityStr);
+
+		// display list of cities in a popup box
 		alert(cityStr);
-	}
-	else
+	  }
+	  else
 		alert('Cannot find city associated with country ' + dest.country );
 
-         }
+        }
 	catch(err) {
 		console.error(err);
 		alert('Fail find city for country' + dest.country);
@@ -182,45 +211,256 @@ const updateTheme = async e => {
 	e.preventDefault();
 
 	const theme = parseUpdateForm('updateForm');
-	console.log("theme.id = ", theme.id);
-	console.log("theme.description = ", theme.description);
+	//console.log("theme.id = ", theme.id);
+	//console.log("theme.description = ", theme.description);
 
-	var body_Jason = JSON.stringify(theme);
-	console.log("body_Jason = ", body_Jason);
-	
-	const SuccessStat = await makeRequest('/api/updateTheme', {
+	const query = `mutation { updateTheme(id: "${theme.id}", description: "${theme.description}") { wasSuccessful }}`;
+
+	const retStat = await makeRequest('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify(theme)
+		body: JSON.stringify({query})
 	});
 
-	if(SuccessStat == true)
-		alert('Succeed to updateTheme with description ' + theme.description);
+        const { data, errors } = retStat;
+
+	//console.log("data.updateTheme.wasSuccessful = ", data.updateTheme.wasSuccessful);
+
+	if(data.updateTheme.wasSuccessful)
+		alert('Succeed in update theme id' + theme.id);
 	else
-		alert('Fail to updateTheme with description ' + theme.description);
+		alert('Fail to update theme id ' + theme.id);
 };
 
 const deleteCity = async e => {
 	e.preventDefault();
 
 	const dest = parseDeleteForm('deleteForm');
-	console.log("dest.id = ", dest.id);
+	//console.log("dest.id = ", dest.id);
 
-	var body_Jason = JSON.stringify(dest);
-	console.log("body_Jason = ", body_Jason);
-	
-	const SuccessStat = await makeRequest('/api/deleteCity', {
+	const query = `mutation { deleteCity(id: "${dest.id}") { wasSuccessful }}`;
+
+	const retStat = await makeRequest('/api/graphql', {
 		headers: {'Content-Type': 'application/json' },
 		method: 'POST',
-		body: JSON.stringify(dest)
+		body: JSON.stringify({query})
 	});
 
-	if(SuccessStat == true)
+        const { data, errors } = retStat;
+
+	//console.log("data.deleteCity.wasSuccessful = ", data.deleteCity.wasSuccessful);
+
+	if(data.deleteCity.wasSuccessful)
 		alert('Succeed to delete city id' + dest.id);
 	else
 		alert('Fail to delete city id ' + dest.id);
+
 };
-	
+
+const signupUser = async e => {
+	e.preventDefault();
+
+	//console.log("in signupUser");
+
+	const user = {
+	  displayName: document.querySelector('#display_name').value,
+	  email: document.querySelector('#email_address').value,
+	  username: document.querySelector('#signup-username').value,
+	  password: document.querySelector('#signup-password').value,
+	};
+
+	//console.log("user.displayName = ", user.displayName);
+	//console.log("user.email = ", user.email);
+	//console.log("user.username = ", user.username);
+	//console.log("user.password = ", user.password);
+
+	const query = `mutation ($user: UserInput!) {
+	   signup(user: $user) {
+	      displayName
+	      username
+	   }
+	 }`;
+
+	 variables = {user};
+
+	 const signedUpUser = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query, variables})
+	 });
+
+         const { data, errors } = signedUpUser;
+
+	 if(!data.signup)
+	 {
+	     alert('fail to signup user ' + user.username);
+		return;
+         }
+
+	  //console.log("data.signup.username = ", data.signup.username);
+	  //console.log("data.signup.displayName = ", data.signup.displayName);
+
+	  setCurrentUser(data.signup);
+	  alert('User ' + data.signup.username + ' has signed up for the travel service');
+};
+
+const cancelSignup = async e => {
+	e.preventDefault();
+	document.querySelector('#signupForm').reset();
+}
+
+const loginUser = async e => {
+	e.preventDefault();
+
+	//console.log("in loginUser");
+
+	const userCredential = {
+	  username: document.querySelector('#login-username').value,
+	  password: document.querySelector('#login-password').value,
+	};
+
+	//console.log("userCredential.username = ", userCredential.username);
+	//console.log("userCredential.password = ", userCredential.password);
+
+	const query = `mutation ($userCredential: LoginInput!) {
+	   login(loginInput: $userCredential) {
+	      displayName
+	      username
+	   }
+	 }`;
+
+	 variables = {userCredential};
+
+	 const loginUser = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query, variables})
+	 });
+
+         const { data, errors } = loginUser;
+
+	 if(!data.login)
+	 {
+	     alert('fail to login user ' + userCredential.username);
+		return;
+         }
+
+	  //console.log("data.login.username = ", data.login.username);
+	  //console.log("data.login.displayName = ", data.login.displayName);
+
+	  setCurrentUser(data.login);
+	  alert('User ' + data.login.username + ' has log into the travel service');
+};
+
+const cancelLogin = async e => {
+	e.preventDefault();
+	document.querySelector('#loginForm').reset();
+}
+
+const cancelReset = async e => {
+	e.preventDefault();
+	//document.querySelector('#resetPasswordForm').reset();
+}
+
+const requestPasswordReset = async e => {
+	e.preventDefault();
+	//console.log("in requestPasswordReset");
+
+
+	const username = document.querySelector('#login-username').value;
+	const query = `mutation ($username: String!) {
+	   requestPasswordReset(username: $username) {
+	      wasSuccessful
+	   }
+	 }`;
+
+	 variables = {username};
+
+	 const retStat = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query, variables})
+	 });
+
+	const { data, errors } = retStat;
+
+	if(!data.requestPasswordReset.wasSuccessful) 
+	     alert('Fail to send a reset email to ' + username);
+	else
+             alert('A reset email with a code has been sent to your email address');
+}
+
+const resetPassword = async e => {
+        e.preventDefault();
+	//console.log("in resetPassword");
+
+        const resetInput = {
+           username: document.querySelector('#reset-username').value,
+           password: document.querySelector('#reset-password').value,
+           key: document.querySelector('#reset-key').value
+        };
+
+        const query = `mutation ($resetInput: PasswordResetInput!) {
+                       resetPassword(resetInput: $resetInput) {
+                         displayName
+                         username
+                       }
+                      }`;
+
+	 variables = {resetInput};
+
+	 const user = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query, variables})
+	 });
+
+         const { data, errors } = user;
+
+	 /* check for errors */
+	 if(errors) {
+	   const err = errors.find(({path}) => path.includes('resetPassword'));
+	   if (err && !data.resetPassword){
+             alert("fail to reset password for user " + resetInput.username + " reason: " +  err.message);
+		return;
+            }
+          }
+
+	  //console.log("data.resetPassword.username = ", data.resetPassword.username);
+	  //console.log("data.resetPassword.displayName = ", data.resetPassword.displayName);
+
+	  setCurrentUser(data.resetPassword);
+	  alert('Successfully reset the password for User ' + data.resetPassword.username);
+}
+
+const logoutUser = async e => {
+	e.preventDefault();
+
+	//console.log("in logoutUser");
+
+	const query = `mutation {
+	   logout { wasSuccessful }
+	 }`;
+
+	 const retStat = await makeRequest('/api/graphql', {
+		headers: {'Content-Type': 'application/json' },
+		method: 'POST',
+		body: JSON.stringify({query})
+	 });
+
+        const { data, errors } = retStat;
+
+	//console.log("data.logout.wasSuccessful = ", data.logout.wasSuccessful);
+
+	if(!data.logout.wasSuccessful)
+		alert('Fail to logout');
+	else
+	{
+		alert('User is now logout');
+		setCurrentUser(null);
+	}
+}
+
 
 //when the button1 is click call showTour1() to fetch the tour1 from the server 
 function showTour1() {

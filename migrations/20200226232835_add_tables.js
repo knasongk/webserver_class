@@ -23,16 +23,9 @@ exports.up = async knex => {
 	   .unique().notNullable();
      table.string('username', 100)
 	   .unique().notNullable();
-     table.integer('destination_id')
-	   .notNullable();
-     table.string('email', 100)
-	   .notNullable();
      ['created_on', 'last_login'].forEach(column =>
 	     table.timestamp(column).defaultTo(knex.fn.now())
 	     .notNullable());
-     table.foreign('destination_id').references('destinations.id')
-	   .onDelete('cascade')
-           .onUpdate('cascade');
      });
 
 // create preferences table
@@ -56,7 +49,19 @@ exports.up = async knex => {
            .onUpdate('cascade');
      table.primary(['city_id', 'preference_id']);
      });
-	
+
+// create themes table
+   await knex.schema.createTable('themes', table => {
+     table.increments();
+     table.string('activity', 200)
+	   .unique().notNullable();
+     table.text('description');
+     table.integer('preference_id')
+	   .notNullable();
+     table.foreign('preference_id').references('preferences.id')
+	   .onDelete('cascade')
+	   .onUpdate('cascade');
+     });
 };
 
 exports.down = async knex => {
@@ -96,5 +101,12 @@ exports.down = async knex => {
      table.integer('preference_id');
      });
 	
+// create themes table
+   await knex.schema.createTable('themes', table => {
+     table.increments();
+     table.string('activity', 200);
+     table.text('description');
+     table.integer('preference_id');
+     });
 };
 
