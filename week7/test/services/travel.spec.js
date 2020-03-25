@@ -1,12 +1,17 @@
 import { expect } from 'chai';
 
 import {
-  getCityByCountry
+  getCityByCountry,
+  getCityByPreference
 } from '../../src/services/retrieve_city.js';
 
 import {
   updateCity 
 } from '../../src/services/update_city.js';
+
+import {
+  deleteCity 
+} from '../../src/services/delete_city.js';
 
 
 import knex from '../../src/database'
@@ -15,17 +20,19 @@ describe('destinations services', () => {
   describe('retrieve city based on country', () => {
     it('returns the expected list of city (happy path)', async() => {
       const dest = await getCityByCountry('Italy');
-	  expect(dest[0].city).to.be.equal('Rome');
+	  expect(dest.city[0].city).to.be.equal('Rome');
     });
+	  
     it('returns the undefined city (unhappy path)', async() => {
       const dest = await getCityByCountry('Mexico');
-	  expect(dest[0]).to.be.undefined;
+	    expect(dest.city[0]).to.be.undefined;
     });
+    
   });
 
-  const fakeDestination = { id: 100, city:'San Clemente', country:'USA',
+  const fakeDestination = { city:'San Clemente', country:'United States',
 	  language:'English'};
-  describe('delete city', () => {
+  describe('insert and update city', () => {
     let destId;
     beforeEach(async () => {
       const ids = await knex('destinations').insert(fakeDestination).returning('id');
@@ -37,13 +44,13 @@ describe('destinations services', () => {
     });
 
     it('returns the expected list of city with added fake Destination (happy path)', async() => {
-      const dest = await getCityByCountry('USA');
-	  expect(dest[1].city).to.be.equal('San Clemente');
+      const dest = await getCityByCountry('United States');
+	  expect(dest.city[1].city).to.be.equal('San Clemente');
     });
 
     it('returns the undefined city with added fake Destination (unhappy path)', async() => {
       const dest = await getCityByCountry('USSR');
-	  expect(dest[1]).to.be.undefined;
+	  expect(dest.city[1]).to.be.undefined;
     });
 
     it('update the city to "Irvine" (happy path)', async() => {
@@ -59,6 +66,41 @@ describe('destinations services', () => {
 	    expect(retStatus).to.be.false;
     });
 
+  });
+
+  describe('retrieve city based on user preference', () => {
+    it('returns the expected list of city (happy path)', async() => {
+      const dest = await getCityByPreference('family fun');
+	  expect(dest.city[2].city).to.be.equal('Budapest');
+    });
+	  
+  });
+
+  const fakeDestination2= { city:'Los Angeles', country:'United States',
+	  language:'English'};
+
+  describe('delete city', () => {
+    let destId;
+    beforeEach(async () => {
+      const ids = await knex('destinations').insert(fakeDestination2).returning('id');
+      destId = ids[0];
+    });
+
+    afterEach(async () => {
+       await knex('destinations').del().where ({id: destId});
+    });
+
+    it('returns the expected status for deleting fake Destination (happy path)', async() => {
+	    let retStatus = false;
+            retStatus = await deleteCity('Los Angeles');
+	    expect(retStatus).to.be.equal(1);
+    });
+
+    it('returns the expected status for deleting fake Destination (unhappy path)', async() => {
+	    let retStatus = false;
+            retStatus = await deleteCity('San Diego');
+	    expect(retStatus).to.be.equal(0);
+    });
 
   });
 
