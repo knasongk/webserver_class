@@ -2,8 +2,7 @@
 
 <html>
 
-<!-- Creating web pages showing vacation places that each of us have visited or would 
-    like to visit.
+<!-- Creating web page of travel site which suggest vacation destinations
       
       I&C SCI_X 472.15
     -->
@@ -12,67 +11,95 @@
 
     <meta charset="utf-8" />
     <meta name="description" content="Ken Nasongkhla "  />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:700|Raleway:400,400i,700" rel="stylesheet"> 
 
     <link rel="stylesheet" type="text/css" href="index.css">
-    <script src="jquery-3.4.1.js"></script>
+    <script src="common.js"></script>
     <script src="main.js"></script>
 </head>
 
 <body>
+<div class="banner">
+   <img src="http://localhost:8080/thai_palace.jpg" class="banner" >
+</div>
 
 <div style="text-align: center;">
-  <h1 id="top">Places to Visit</h1>
-  <div id="welcome-message"></div>
-	<div id="signupBox">
-		<a href="#signup-dialog" data-toggle="modal" data-target="#signup-dialog">Sign Up</a>
-	</div>
-	<div id="loginBox">
-		<a href="#login-dialog" data-toggle="modal" data-target="#login-dialog">Log In</a>
-	</div>
-	<div id="resetBox">
-		<a href="#reset-dialog" data-toggle="modal" data-target="#reset-dialog">Reset Password</a>
-	</div>
-	<div id="logoutBox">
-		<a href="#logout-dialog" data-toggle="modal" data-target="#logout-dialog">Log Out</a>
-	</div>
+  <h1 id="top">Travel Unscripted</h1>
+</div>
+
+<!---navigation -->
+<nav>
+  <ul>
+    <li class="currentPage" id="home">
+      HomePage
+    </li>
+    <li>
+      <a href="signup.html">Sign Up</a>
+    </li>
+    <li>
+      <a href="login.html">Log In</a>
+    </li>
+    <li>
+      <a href="resetpassword.html">Reset Password</a>
+    </li>
+    <li>
+      <a href="logout.html">Log Out</a>
+    </li>
+
+  </ul>
+</nav>
+
+<div stype="text-align: center;">
+  <div id = "welcome-message"></div>
 </div>
 
   <br>
+
+  <div class="item2">
+  	<!-- 
+      <img src="source/img/Phila-artMuseum.jpg" alt="Philadelphia skylinee at night" class="responsive">
+    -->
+
+  	<h3>City by Preferences</h3>
+		<p>"We select the vacation spot for you based on your preferences.""
+		</p>
+
+	  	<p><a href="citybyprefs.html"><button class="button1">More</button></a>
+	  	</p>
+  </div>
+
+  <div class="item2">
+  	<!-- 
+      <img src="source/img/Phila-artMuseum.jpg" alt="Philadelphia skylinee at night" class="responsive">
+    -->
+
+  	<h3>Add new or delete Location</h3>
+		<p>"We can add your location suggestion to our vacation spot list."
+    </p>
+    <p>"We can also remove the location suggestion by you from our vacation spot list."
+    </p>
+
+	  	<p><a href="addcity.html"><button class="button1">More</button></a>
+	  	</p>
+  </div>
+
+  <div class="item2">
+  	<!-- 
+      <img src="source/img/Phila-artMuseum.jpg" alt="Philadelphia skylinee at night" class="responsive">
+    -->
+
+  	<h3>Search for vacation spot</h3>
+		<p>"Our list of vacation around the world.""
+		</p>
+
+	  	<p><a href="searchcity.html"><button class="button1">More</button></a>
+	  	</p>
+  </div>
+
+  <!--
   <button id="tour1">Get tour #1 information</button>
   <button id="tour2">Get tour #2 information</button>
 
-  <!--- Just examples of images.  You can add any pictures of your favorite places -->
-
-   <h3 id="thailand">Bangkok, Thailand</h3>
-  <img src="http://localhost:8080/thai_palace.jpg"
-       width="600" height="450"
-      title="Thai palace"\>
-  <br><br>
-
-  <h2 id="adding_new_city"> ADD NEW CITY</h2>
-  <form id="addForm">
-	 <p>
-	 <label>ID: <input name="id" placeholder="18"/></label>
-	 </p>
-	 <p>
-	 <label>City: <input name="city" placeholder="Bangkok"/></label>
-	 </p>
-	 <p>
-	 <label>Country: <input name="country" placeholder="Thailand"/></label>
-	 </p>
-	 <p>
-	 <label>Language: <input name="language" placeholder="Thai"/></label>
-	 </p>
-	 <input type="submit" />
-  </form>
-
-  <h2 id="retrieve_city"> RETRIEVE LIST OF CITIES FROM THE SELECTED COUNTRY</h2>
-  <form id="retrieveForm">
-	 <p>
-	 <label>Country: <input name="country" placeholder="Italy"/></label>
-	 </p>
-	 <input type="submit" />
-  </form>
 
   <h2 id="update_theme"> UPDATE THEME DESCRIPTION</h2>
   <form id="updateForm">
@@ -85,67 +112,9 @@
 	 <input type="submit" />
   </form>
 
-  <h2 id="delete_city"> DELETE A CITY</h2>
-  <form id="deleteForm">
-	 <p>
-	 <label>ID: <input name="id" placeholder="7"/></label>
-	 </p>
-	 <input type="submit" />
-  </form>
-
-  <h2 id="signup-dialog"> SIGN UP</h2>
-  <form id="signupForm">
-          <p>
-            <label>Name: <input id="display_name"/></label>
-          </p>
-          <p>
-            <label>Email Address: <input id="email_address"/></label>
-          </p>
-          <p>
-            <label>Username: <input id="signup-username"/></label>
-          </p>
-          <p>
-            <label>Password: <input id="signup-password"/></label>
-          </p>
-	  
-	  <button id="cancelSignup">cancel</button>
-	  <input type="submit" name="signup" value="sign up"></input>
-  </form>
-
-  <h2 id="login-dialog"> LOG IN</h2>
-  <form id="loginForm">
-          <p>
-            <label>Username: <input id="login-username"/></label>
-          </p>
-          <p>
-            <label>Password: <input id="login-password"/></label>
-          </p>
-
-	  <button id="cancelLogin">cancel</button>
-	  <button id="request_password_reset">Request Password Reset</button>
-	  <input type="submit" name="login" value="login"></input>
-  </form>
-
-  <h2 id="reset-dialog"> RESET PASSWORD</h2>
-  <form id="resetPasswordForm">
-          <p>
-            <label>Username: <input id="reset-username"/></label>
-          </p>
-          <p>
-            <label>Email Code: <input id="reset-key"/></label>
-          </p>
-          <p>
-            <label>Password: <input id="reset-password"/></label>
-          </p>
-	  <button id="cancelReset">cancel</button>
-	  <input type="submit" name="reset" value="reset"></input>
-  </form>
 
 
-  <h2 id="logout-dialog"> LOG OUT</h2>
-  <form id="logoutForm">
-	  <input type="submit" name="logout" value="logout"></input>
-  </form>
+-->
 
 </body>
 

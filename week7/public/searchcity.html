@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Search Cities</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="Ken Nasongkhla "  />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:700|Raleway:400,400i,700" rel="stylesheet"> 
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="common.js"></script>
+    <script src="searchcity.js"></script>
+</head>
+
+<body>
+  <!---navigation  -->	
+  
+    <nav>
+        <ul>
+        <li id="home">
+          <a href="index.html"> Home Page 
+        </li>        
+        <li>
+          <a href="login.html">Log In</a>
+        </li>
+        <li>
+          <a href="signup.html">Sign Up</a>
+        </li>
+        <li>
+          <a href="logout.html">Log Out</a>
+        </li>
+      </ul>
+  
+    </nav>
+
+    <h2 id="show_selected_cities"> OUR CITY LIST</h2>
+    <div style="text-align: left;">
+        <div id = "current-selected-cities"></div>
+    </div>
+
+    <h2 id="retrieve_city"> RETRIEVE LIST OF CITIES FROM THE SELECTED COUNTRY</h2>
+    <form id="retrieveForm">
+       <p>
+       <label>Country: <input id="retrievecity-country" name="country"/></label>
+       </p>
+       <input type="submit" />
+    </form>
+
+</body>
+
+</html>
+

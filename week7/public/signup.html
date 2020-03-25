@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>signup new user</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="Ken Nasongkhla "  />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:700|Raleway:400,400i,700" rel="stylesheet"> 
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="jquery-3.4.1.js"></script>
+    <script src="common.js"></script>
+    <script src="signup.js"></script>
+</head>
+
+<body>
+  <!---navigation  -->	
+  
+    <nav>
+        <ul>
+        <li id="home">
+          <a href="index.html"> Home Page 
+        </li>
+        <li>
+          <a href="login.html">Log In</a>
+        </li>
+        <li>
+          <a href="resetpassword.html">Reset Password</a>
+        </li>
+        <li>
+          <a href="logout.html">Log Out</a>
+        </li>
+      </ul>
+  
+    </nav>
+
+    <div style="text-align: left;">
+      <div id = "welcome-message-signup"></div>
+    </div>
+
+  <h2 id="signup-dialog"> SIGN UP NEW USER</h2>
+  <form id="signupForm">
+          <p>
+            <label>Name: <input id="display_name"/></label>
+          </p>
+          <p>
+            <label>Email Address: <input id="email_address"/></label>
+          </p>
+          <p>
+            <label>Username: <input id="signup-username"/></label>
+          </p>
+          <p>
+            <label>Password: <input id="signup-password"/></label>
+          </p>
+	  
+	  <button id="cancelSignup">cancel</button>
+	  <input type="submit" name="signup" value="sign up"></input>
+  </form>
+
+</body>
+</html>

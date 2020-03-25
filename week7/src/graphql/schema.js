@@ -3,14 +3,13 @@ import { buildSchema } from 'graphql'
 export default buildSchema(`
    scalar Date
 
-   type Destinations {
-      id: ID!
-      city: [String]
-      country: String
-   }
-
    type Destination {
       city: String
+   }
+
+   type VacationSpots {
+      city: String!
+      country: String!
    }
 
    type User {
@@ -45,6 +44,16 @@ export default buildSchema(`
       password: String!
    }
 
+   input AddCityInput {
+      city: String!
+      country: String!
+      language: String!
+   }
+
+   input DeleteCityInput {
+      city: String!
+   }
+
    input PasswordResetInput {
       username: String!
       password: String!
@@ -53,13 +62,15 @@ export default buildSchema(`
 
    type Query {
       cityByCountry(country: String!): [Destination] 
+      cityByPreference(preference: String!): [Destination]
       currentUser: User
+      availCity: [Destination]
    }
 
    type Mutation {
-       deleteCity(id: ID!): SuccessResponse
+       deleteCity(deleteCityInput: DeleteCityInput!): SuccessResponse
        updateTheme(id: ID!, description: String): SuccessResponse
-       addCity(id: ID!, city: String!, country: String!, language: String!): Destination 
+       addCity(addCityInput: AddCityInput!): Destination 
        signup(user: UserInput!): User
        login(loginInput: LoginInput!): User
        logout: SuccessResponse

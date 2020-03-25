@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Cities by Preference</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="Ken Nasongkhla "  />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:700|Raleway:400,400i,700" rel="stylesheet"> 
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="common.js"></script>
+    <script src="citybyprefs.js"></script>
+</head>
+
+<body>
+  <!---navigation  -->	
+  
+    <nav>
+        <ul>
+        <li id="home">
+          <a href="index.html"> Home Page 
+        </li>        
+        <li>
+          <a href="login.html">Log In</a>
+        </li>
+        <li>
+          <a href="signup.html">Sign Up</a>
+        </li>
+        <li>
+          <a href="logout.html">Log Out</a>
+        </li>
+      </ul>
+  
+    </nav>
+
+    <h2 id="show_selected_cities"> OUR CITY LIST</h2>
+    <div style="text-align: left;">
+        <div id = "current-pref-cities"></div>
+    </div>
+
+    <h2 id="prefer_city"> SELECT YOUR VACATION PREFERENCES</h2>
+
+    <form id="citybyprefsForm">
+        <fieldset>
+          <legend>Your Style</legend>
+          <div id="topic">
+  
+        <input type="radio" name="topic" id="pref1" value="slow pace" checked="checked">
+        <label for="pref1">Relaxing</label>
+  
+        <input type="radio" name="topic" id="pref2" value="adventure">
+        <label for="pref2">Adventure</label>   
+  
+        <input type="radio" name="topic" id="pref3" value="family fun">
+        <label for="pref3">Familty Fun</label> 
+  
+        <input type="radio" name="topic" id="pref4" value="shopping">
+        <label for="pref4">Shopping</label> 
+
+        <input type="radio" name="topic" id="pref5" value="beach">
+        <label for="pref5">Beach</label>
+
+        <input type="radio" name="topic" id="pref6" value="sport">
+        <label for="pref6">Sporting Event</label> 
+
+        <input type="radio" name="topic" id="pref7" value="food & drink">
+        <label for="pref7">Food & Drink</label> 
+
+        <input type="radio" name="topic" id="pref8" value="city highlights">
+        <label for="pref8">City Highlights</label> 
+
+        <input type="radio" name="topic" id="pref9" value="day trip">
+        <label for="pref9">Day Trip</label>
+
+        <input type="radio" name="topic" id="pref10" value="half day trip">
+        <label for="pref10">Half Day Trip</label> 
+
+        <input type="radio" name="topic" id="pref11" value="city excursion">
+        <label for="pref11">City Excursion</label> 
+
+        <input type="radio" name="topic" id="pref12" value="nightlife">
+        <label for="pref12">Night Life</label> 
+
+        <input type="radio" name="topic" id="pref13" value="outdoors">
+        <label for="pref13">Outdoors</label> 
+
+        <input type="radio" name="topic" id="pref14" value="cultural">
+        <label for="pref14">Cultural</label> 
+
+        <input type="radio" name="topic" id="pref15" value="tourist spots">
+        <label for="pref15">Tourist Spots</label> 
+
+        <input type="radio" name="topic" id="pref16" value="off tourist trail">
+        <label for="pref16">Off Tourist Spots</label> 
+       
+
+        <p>
+            Enter your selection
+        </p>
+        <input type="submit"/>
+  
+            </div>
+        </fieldset>
+      </form>
+
+</body>
+
+</html>
+

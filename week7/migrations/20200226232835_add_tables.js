@@ -42,11 +42,9 @@ exports.up = async knex => {
      table.integer('preference_id')
 	   .notNullable();
      table.foreign('city_id').references('destinations.id')
-	   .onDelete('cascade')
-           .onUpdate('cascade');
+	   .onDelete('cascade');
      table.foreign('preference_id').references('preferences.id')
-	   .onDelete('cascade')
-           .onUpdate('cascade');
+	   .onDelete('cascade');
      table.primary(['city_id', 'preference_id']);
      });
 
@@ -59,8 +57,7 @@ exports.up = async knex => {
      table.integer('preference_id')
 	   .notNullable();
      table.foreign('preference_id').references('preferences.id')
-	   .onDelete('cascade')
-	   .onUpdate('cascade');
+	   .onDelete('cascade');
      });
 };
 

@@ -90,7 +90,7 @@ exports.seed = async knex => {
 	  {
 	     id: 15,
              city: 'New York',
-	     country: 'USA',
+	     country: 'United States',
 	     language: 'English'
 	  },
 	  {

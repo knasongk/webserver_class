@@ -1,9 +1,9 @@
 import knex from '../database'
 
-export const deleteCity = async cityId => {
+export const deleteCity = async cityName => {
 	try {
 	var retStat = await knex('destinations')
-          .where({id: cityId})
+          .where({city: cityName})
 	  .del();
 	return retStat;
 	} catch(e) {

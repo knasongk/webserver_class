@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Add and Delete Cities</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="Ken Nasongkhla "  />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:700|Raleway:400,400i,700" rel="stylesheet"> 
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="jquery-3.4.1.js"></script>
+    <script src="common.js"></script>
+    <script src="addcity.js"></script>
+</head>
+
+<body>
+  <!---navigation  -->	
+  
+    <nav>
+        <ul>
+        <li id="home">
+          <a href="index.html"> Home Page 
+        </li>        
+        <li>
+          <a href="login.html">Log In</a>
+        </li>
+        <li>
+          <a href="signup.html">Sign Up</a>
+        </li>
+        <li>
+          <a href="logout.html">Log Out</a>
+        </li>
+      </ul>
+  
+    </nav>
+
+    <h2 id="show_current_cities"> CURRENT VACATION SPOTS</h2>
+    <div style="text-align: left;">
+        <div id = "current-vacation-spots"></div>
+    </div>
+
+    <h2 id="adding_new_city"> ADD NEW CITY</h2>
+    <form id="addForm">
+         <p>
+         <label>City: <input id="addcity-city" name="city" /></label>
+         </p>
+         <p>
+         <label>Country: <input id="addcity-country" name="country" /></label>
+         </p>
+         <p>
+         <label>Language: <input id="addcity-language" name="language" /></label>
+         </p>
+         <input type="submit" />
+    </form>
+
+    <div style="text-align: left;">
+        <div id = "addcity-message"></div>
+    </div>
+
+    <h2 id="delete_city"> DELETE A CITY</h2>
+    <form id="deleteForm">
+     <p>
+      <label>City: <input id="deletecity-city" name="city" /></label>
+     </p>
+     <input type="submit" />
+    </form>
+
+</body>
+
+</html>
+

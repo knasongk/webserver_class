@@ -1,6 +1,8 @@
 import { getTourById } from '../tours.js';
 import { addCity } from '../services/insert_city.js';
-import { getCityByCountry } from '../services/retrieve_city.js';
+import { getCityByCountry,
+		 getAllCities,
+		getCityByPreference } from '../services/retrieve_city.js';
 import { updateTheme } from '../services/update_theme.js';
 import { deleteCity } from '../services/delete_city.js';
 import { compareHashed } from '../auth';
@@ -26,16 +28,28 @@ const convertUserFromDatabase = user => {
 const resolvers = {
    cityByCountry: async (args, request) => {
 	   const { country } = args;
-           //console.log("cityByCountry country = ", country);
+        //console.log("cityByCountry country = ", country);
 
 	   const {city} = await getCityByCountry(country);
 	   //console.log("resolvers cityByCountry returns: ", city);
 
 	   return city; 
    },
-   deleteCity: async({ id }) => {
+   cityByPreference: async (args, request) => {
+	const { preference } = args;
+    //console.log("cityByPreference preference = ", preference);
+
+	const {city} = await getCityByPreference(preference);
+	//console.log("resolvers cityByPreference returns: ", city);
+
+	return city; 
+   },   
+   deleteCity: async({ deleteCityInput }, {session}) => {
 	   try {
-	      const retStat = await deleteCity(parseFloat(id));
+
+		  const { city } = deleteCityInput;
+
+	      const retStat = await deleteCity(city);
 
 	      if(retStat == true) 
                  return { wasSuccessful: true };
@@ -61,36 +75,22 @@ const resolvers = {
 		   return { wasSuccessful: false };
            }
    },
-   addCity: async(args, request) => {
-	   try {
-	      const city = await addCity(args);
-	      //console.log("return city = ", city);
-              return city;
-	   }
-	   catch(err) {
-		   return city; // city will be blank
-           }
+  addCity: async({addCityInput}, {session}) => {
+	try {
+		const {city, country, language } = addCityInput;
+
+	   const retcity = await addCity(addCityInput);
+	   //console.log("return retcity = ", retcity);
+		   return retcity;
+	}
+	catch(err) {
+		return city; // city will be blank
+		}
    },
+
    signup: async({user}, {session}) => {
 	   try {
-		   /*
-	   const { displayName, email, password, username } = user;
-	   console.log("displayName = ", displayName);
-	   console.log("email = ", email);
-	   console.log("password = ", password);
-	   console.log("username = ", username);
-	   */
 
-		   /*
-           if(!session.user)
-		   console.log("session.user is null");
-           else {
-	     console.log("signup: session.user.displayName = ", session.user.displayName);
-	     console.log("signup: session.user.username = ", session.user.username);
-           }
-	   */
-
-	   //console.log("in signup");
 	   session.user = convertUserFromDatabase(await createUser(user));
 	   //console.log("session.user.displayName = ", session.user.displayName);
 	   //console.log("session.user.username = ", session.user.username);
@@ -103,20 +103,6 @@ const resolvers = {
    },
    login: async({loginInput: { username, password }}, {session}) => {
 	   try {
-	   //console.log("username = ", username);
-	   //console.log("password = ", password);
-
-		   /*
-           if(!session.user)
-		   console.log("session.user is null");
-           else {
-	     console.log("login: session.user.displayName = ", session.user.displayName);
-	     console.log("login: session.user.username = ", session.user.username);
-           }
-	   */
-
-	   //console.log("in login");
-
            const user = await getUserByUsername(username);
 
 	   if(!user){
@@ -124,24 +110,9 @@ const resolvers = {
 	       session.user = null;
 	       return session.user;
            }
-
-           //console.log("user.password = ", user.password);
-
            const matches = await compareHashed(password, user.password);
 
-	   //console.log("matches = ", matches);
-
            session.user = matches ? convertUserFromDatabase(user) : null;
-
-		   /*
-	   if(!session.user) {
-              console.log("password " + password + " does not match for user " + username);
-           }
-           else {
-	     console.log("session.user.displayName = ", session.user.displayName);
-	     console.log("session.user.username = ", session.user.username);
-	   }
-	   */
 
 	   return session.user;
            }
@@ -151,13 +122,8 @@ const resolvers = {
 	   }
    },
    logout: async(args, { session }) => {
-	   //console.log("in logout");
 	   delete session.user;
-	   /*
-	   if(!session.user) {
-		   console.log("session.user is now null");
-	   }
-	   */
+
 	   return { wasSuccessful: true };
    },
    requestPasswordReset: async({ username }) => {
@@ -186,6 +152,14 @@ const resolvers = {
    },
    currentUser: (args, { session }) => session.user,
 
+   availCity: async (args, request) => {
+		//console.log("in availCity");
+
+	    const {city} = await getAllCities();
+	    //console.log("resolvers availCity returns: ", city);
+
+	    return city; 
+	},
 };
 
 export default resolvers;

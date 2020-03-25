@@ -60,11 +60,53 @@ padding: 10px 0px;
 }
 
 .banner{
-width:100%;
+  text-align: right;
+width: 65%;
 }
 .colorBackgound{
   background-color:#e6eef8;
 }
+
+
+/*  --------Nav ---------------  */
+nav{
+
+  background-color:#496f9d;
+}
+
+nav ul {
+  list-style-type: none;
+
+  font-weight: bold;
+  overflow: hidden;
+  font-family: 'Raleway', sans-serif;
+  font-weight:400;
+
+}
+nav li{
+float:left;
+
+}
+
+nav li a {
+	color:#95b8e2; 
+	text-decoration: none;
+	 text-align: center;
+    display: block;
+  padding-right: 2em;
+}
+
+nav li a:hover{
+color:white;
+
+}
+.currentPage{
+color:#d4e3f5; 
+  padding-right: 2em;
+
+
+}
+
 
 .header {
 	background-color:red;
@@ -107,7 +149,7 @@ width:100%;
   position:absolute;
 }
 
-body{background-color: cyan}
+body{background-color: white}
 .responsive {
   max-width: 100%;
   height: auto;
@@ -117,8 +159,16 @@ body{background-color: cyan}
 .box1 {border: 1px solid orange; display: flex; flex-direction: row; justify-content: space-between; font-weight:bold}
 .item_flex1 {background-color: lightGreen; border: 1px solid black; padding: 5px}
 
-#welcome-message {
-  font-size: 4em
+#welcome-message,
+#welcome-message-signup,
+#welcome-message-login,
+#logout-message,
+#reset-message,
+#addcity-message,
+#current-vacation-spots,
+#current-selected-cities,
+#current-pref-cities {
+  font-size: 2em
 }
 
 #responsive_1 {
@@ -144,7 +194,7 @@ body{background-color: cyan}
 /*------------------ media queries --------------------*/
 
 @media screen and (max-width: 1800px) {
-  body {background-color:lightpink}
+  body {background-color:white}
   .responsive {
     max-width: 70%;
     height: auto;
@@ -167,7 +217,7 @@ body{background-color: cyan}
 }
 
 @media screen and (max-width: 1000px) {
-  body {background-color: yellow}
+  body {background-color: white}
   .responsive {
     max-width: 50%;
     height: auto;

@@ -9,7 +9,7 @@ export const addCity = async newcity => {
 	
 	return {city};
 	} catch(e) {
-		//console.error(e);
+		console.error(e);
 		return({city: ''});
 	}
 };

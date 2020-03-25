@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>login user</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="Ken Nasongkhla "  />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:700|Raleway:400,400i,700" rel="stylesheet"> 
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="jquery-3.4.1.js"></script>
+    <script src="common.js"></script>
+    <script src="login.js"></script>
+</head>
+
+<body>
+  <!---navigation  -->	
+  
+    <nav>
+        <ul>
+        <li id="home">
+          <a href="index.html"> Home Page 
+        </li>
+        <li>
+          <a href="signup.html">Sign Up</a>
+        </li>
+        <li>
+          <a href="resetpassword.html">Reset Password</a>
+        </li>
+        <li>
+          <a href="logout.html">Log Out</a>
+        </li>
+      </ul>
+  
+    </nav>
+
+    <div style="text-align: left;">
+        <div id = "welcome-message-login"></div>
+      </div>
+
+    <h2 id="login-dialog"> LOG IN</h2>
+    <form id="loginForm">
+            <p>
+              <label>Username: <input id="login-username"/></label>
+            </p>
+            <p>
+              <label>Password: <input id="login-password"/></label>
+            </p>
+  
+        <button id="cancelLogin">cancel</button>
+        <button id="request_password_reset">Request Password Reset</button>
+        <input type="submit" name="login" value="login"></input>
+    </form>
+
+
