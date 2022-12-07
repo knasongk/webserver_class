@@ -33,7 +33,7 @@
     "express-graphql": "^0.9.0",
     "graphql": "^14.6.0",
     "knex": "^0.20.10",
-    "lint": "^0.7.0",
+    "lint": "^0.8.8",
     "lokka": "^1.7.0",
     "lokka-transport-http": "^1.6.1",
     "mocha": "^7.0.1",
